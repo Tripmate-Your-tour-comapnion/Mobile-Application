@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tripmate/screens/onboarding/onboarding_one_screen.dart';
+
+
 
 class SplashScreeen extends StatefulWidget {
   const SplashScreeen({super.key});
@@ -11,16 +11,26 @@ class SplashScreeen extends StatefulWidget {
 
 class _SplashScreeenState extends State<SplashScreeen> {
   @override
-  void initState() {
-   Future.delayed(const Duration(seconds: 2),(){
-    Get.to(const OnboardingOneScreen());
-   });
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("TripMate"),),
-    ) ;
+    return const SafeArea(
+      child: Scaffold(
+        body: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 5),
+            Text(
+                "TripMate",
+              style: TextStyle(
+                fontSize: 50,
+                color: Colors.black),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

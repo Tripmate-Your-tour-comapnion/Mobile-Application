@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
+class OnboardingTwoScreen extends StatelessWidget {
+  const OnboardingTwoScreen({super.key});
 
-class OnboardingOneScreen extends StatelessWidget {
-  const OnboardingOneScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 16, 53, 17),
         body: Container(
           width: double.maxFinite,
           padding: const EdgeInsets.symmetric(
@@ -24,7 +23,7 @@ class OnboardingOneScreen extends StatelessWidget {
                 width: 311,
                 margin: const EdgeInsets.only(right: 78),
                 child: const Text(
-                  "Travel Time",
+                 "Travel Time",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style:TextStyle(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.white),
@@ -35,7 +34,7 @@ class OnboardingOneScreen extends StatelessWidget {
                 width: 307,
                 margin: const EdgeInsets.only(right: 82),
                 child: const Text(
-                  "is Simple",
+             "Simple",
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.white),
@@ -43,8 +42,10 @@ class OnboardingOneScreen extends StatelessWidget {
               ),
               const Spacer(),
               // CustomElevatedButton(
-              //   text: "next",
+              //   text: "lbl_get_started".tr,
               //   margin: EdgeInsets.symmetric(horizontal: 43.h),
+              //   buttonStyle: CustomButtonStyles.outlinePrimaryTL10,
+              //   buttonTextStyle: CustomTextStyles.titleLargeBold,
               //   alignment: Alignment.center,
               // )
             ],
