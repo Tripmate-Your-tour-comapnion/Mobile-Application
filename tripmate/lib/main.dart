@@ -14,6 +14,7 @@ class TripMateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'TripMate',
       theme: ThemeData(
         useMaterial3: true,
