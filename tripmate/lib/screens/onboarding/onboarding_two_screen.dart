@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../core/app_exports.dart';
+
+import '../../widgets/custom_elevated_button.dart';
 
 class OnboardingTwoScreen extends StatelessWidget {
   const OnboardingTwoScreen({super.key});
@@ -9,45 +12,45 @@ class OnboardingTwoScreen extends StatelessWidget {
       child: Scaffold(
         body: Container(
           width: double.maxFinite,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 19,
-            vertical: 88,
+          padding: EdgeInsets.symmetric(
+            horizontal: 19.h,
+            vertical: 88.v,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: 16.v),
               Container(
-                width: 311,
-                margin: const EdgeInsets.only(right: 78),
-                child: const Text(
-                 "Travel Time",
+                width: 311.h,
+                margin: EdgeInsets.only(right: 78.h),
+                child: Text(
+                  "msg_it_s_travel_time".tr,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style:TextStyle(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.white),
+                  style: theme.textTheme.displayMedium,
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.v),
               Container(
-                width: 307,
-                margin: const EdgeInsets.only(right: 82),
-                child: const Text(
-             "Simple",
+                width: 307.h,
+                margin: EdgeInsets.only(right: 82.h),
+                child: Text(
+                  "msg_lorem_ipsum_is_simply".tr,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.white),
+                  style: CustomTextStyles.bodyMediumOnPrimary15,
                 ),
               ),
-              const Spacer(),
-              // CustomElevatedButton(
-              //   text: "lbl_get_started".tr,
-              //   margin: EdgeInsets.symmetric(horizontal: 43.h),
-              //   buttonStyle: CustomButtonStyles.outlinePrimaryTL10,
-              //   buttonTextStyle: CustomTextStyles.titleLargeBold,
-              //   alignment: Alignment.center,
-              // )
+              Spacer(),
+              CustomElevatedButton(
+                text: "lbl_get_started".tr,
+                margin: EdgeInsets.symmetric(horizontal: 43.h),
+                buttonStyle: CustomButtonStyles.outlinePrimaryTL10,
+                buttonTextStyle: CustomTextStyles.titleLargeBold,
+                alignment: Alignment.center,
+              )
             ],
           ),
         ),

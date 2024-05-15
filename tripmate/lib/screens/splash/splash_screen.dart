@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-
+import '../../../core/app_exports.dart';
 
 class SplashScreeen extends StatefulWidget {
   const SplashScreeen({super.key});
@@ -12,7 +12,7 @@ class SplashScreeen extends StatefulWidget {
 class _SplashScreeenState extends State<SplashScreeen> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
         body: SizedBox(
           width: double.maxFinite,
@@ -20,12 +20,10 @@ class _SplashScreeenState extends State<SplashScreeen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 5),
-            Text(
-                "TripMate",
-              style: TextStyle(
-                fontSize: 50,
-                color: Colors.black),
+              SizedBox(height: 5.v),
+              Text(
+                "lbl_tripmate".tr,
+                style: theme.textTheme.displayMedium,
               )
             ],
           ),
