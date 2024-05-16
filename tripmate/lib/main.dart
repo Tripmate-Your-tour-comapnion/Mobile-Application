@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import './screens/splash/splash_screen.dart';
+import '../../../core/app_exports.dart';
+
+
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const TripMateApp());
 }
 
@@ -16,10 +18,12 @@ class TripMateApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripMate',
+      locale: Get.deviceLocale,
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const SplashScreeen(),
+        initialRoute: AppRoutes.initialRoute,
+        getPages: AppRoutes.pages,
     );
   }
 }
