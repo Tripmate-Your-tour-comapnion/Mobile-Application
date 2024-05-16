@@ -93,7 +93,7 @@ class CustomCheckboxButton extends StatelessWidget {
         height: iconSize ?? 21,
         width: iconSize ?? 21,
         child: Checkbox(
-          visualDensity: VisualDensity(
+          visualDensity: const VisualDensity(
             vertical: -4,
             horizontal: -4,
           ),
