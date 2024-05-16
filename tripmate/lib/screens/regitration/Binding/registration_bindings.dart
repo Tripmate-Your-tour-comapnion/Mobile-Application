@@ -4,7 +4,7 @@ import 'package:tripmate/screens/regitration/controller/registration_controller.
 class RegistrationBinding extends Bindings{
   @override
   void dependencies() {
-    Get.lazyPut(() => registrationController());
+    Get.lazyPut(() => RegistrationController());
   }
 
 }
