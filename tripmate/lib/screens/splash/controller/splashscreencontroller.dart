@@ -8,8 +8,8 @@ class SplashScreenController extends GetxController{
 @override
   void onReady() {
     Future.delayed(const Duration(seconds: 2), () {
-      Get.off(
-        AppRoutes.onboardingoneScreen,
+      Get.toNamed(
+        AppRoutes.registerScreen,
       );
     });
     super.onReady();

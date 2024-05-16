@@ -10,11 +10,9 @@ import '../screens/onboarding/onboarding_two_screen.dart';
 
 class AppRoutes{
 
-
 static const String onboardingoneScreen = '/onboardingScreen_one';
 static const String onboardingtwoScreen = '/onboardingScreen_two';
-static const String registerscreenScreen = '/registrationScreen';
-// static const String appNavigationScreen = '/app_navigation_screen';
+static const String registerScreen = '/registrationScreen';
 static const String initialRoute = '/initialRoutes';
 
 
