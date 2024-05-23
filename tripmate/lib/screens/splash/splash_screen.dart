@@ -16,10 +16,10 @@ class _SplashScreeenState extends State<SplashScreeen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed(AppRoutes.hotelHomeScreen);
-      // Get.offNamed(AppRoutes.onboardingoneScreen);
+      Get.offNamed(AppRoutes.onboardingoneScreen);
+      double height = MediaQuery.of(context).size.height;
     });
 
     return SafeArea(
