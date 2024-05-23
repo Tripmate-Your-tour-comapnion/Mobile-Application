@@ -1,5 +1,15 @@
 //  Screens
 
+import 'package:tripmate/screens/hotel/Binding/hotel_binding.dart';
+import 'package:tripmate/screens/hotel/hotel_detail_screen.dart';
+import 'package:tripmate/screens/hotel/room_detail_screen.dart';
+import 'package:tripmate/screens/hotel/rooms_list_screen.dart';
+import 'package:tripmate/screens/regitration/Binding/registration_bindings.dart';
+import 'package:tripmate/screens/setting/Binding/edit_profile_Binding.dart';
+import 'package:tripmate/screens/setting/Binding/setting_binding.dart';
+import 'package:tripmate/screens/setting/edit_profile_screen.dart';
+import 'package:tripmate/screens/splash/Binding/splashScreenBinding.dart';
+
 import 'package:tripmate/screens/AddProduct/Binding/add_product_binding.dart';
 import 'package:tripmate/screens/AddProduct/addProduct.dart';
 import 'package:tripmate/screens/AddTourPackage/Binding/add_tour_binding.dart';
@@ -23,6 +33,12 @@ import 'package:tripmate/screens/productDetail/program_detail.dart';
 import '../screens/BlogScreen/Binding/blogdetail_binding.dart';
 import '../screens/homescreen/Binding/home_bindings.dart';
 import '../screens/regitration/Binding/registration_bindings.dart';
+
+import '../screens/hotel/Binding/room_binding.dart';
+import '../screens/hotel/Binding/room_reservation_binding.dart';
+import '../screens/hotel/hotels_screen.dart';
+import '../screens/hotel/room_payment_summary_screen.dart';
+
 import '../screens/onboarding/Binding/onboarding_one_binding.dart';
 import '../screens/onboarding/Binding/onboarding_two_binding.dart';
 
@@ -36,6 +52,8 @@ import '../screens/homescreen/homescreen.dart';
 //  Core File
 
 import '../core/app_exports.dart';
+import '../screens/setting/setting_screen.dart';
+import '../screens/splash/splash_screen.dart';
 
 // Route Implementation
 
@@ -55,12 +73,55 @@ class AppRoutes {
   static const String packageDetail = "/packagedetailScreen";
   static const String initialRoute = '/initialRoutes';
 
+  static const String roomDtailScreen = '/room_detail_screen';
+  static const String roomListScreen = '/room_list_screen';
+  static const String roomPaymentSummaryScreen = '/room_payment_summary_screen';
+  static const String hotelDetailScreen = '/hotel_detail_screen';
+  static const String hotelHomeScreen = '/hotels_screen';
+  static const String editProfile = '/edit_profile_screen';
+  static const String settingScreen = '/setting_screen';
+
   static List<GetPage> pages = [
-    // GetPage(
-    //   name: initialRoute,
-    //   page: () => const SplashScreeen(),
-    //   bindings: [SplashScreenBinding()],
-    // ),
+    GetPage(
+      name: roomDtailScreen,
+      page: () => RoomDetailScreen(),
+      bindings: [RoomBinding()],
+    ),
+    GetPage(
+      name: roomListScreen,
+      page: () => RoomListScreen(),
+      bindings: [RoomBinding()],
+    ),
+    GetPage(
+      name: roomPaymentSummaryScreen,
+      page: () => RoomPaymentSummaryScreen(),
+      bindings: [RoomReservationBinding()],
+    ),
+    GetPage(
+      name: hotelDetailScreen,
+      page: () => HotelDetailScreen(),
+      bindings: [HotelBinding()],
+    ),
+    GetPage(
+      name: hotelHomeScreen,
+      page: () => const HotelsScreen(),
+      bindings: [HotelBinding()],
+    ),
+    GetPage(
+      name: editProfile,
+      page: () => const EditProfileScreen(),
+      bindings: [EditProfileBinding()],
+    ),
+    GetPage(
+      name: settingScreen,
+      page: () => const SettingScreen(),
+      bindings: [SettingBinding()],
+    ),
+    GetPage(
+      name: initialRoute,
+      page: () => const SplashScreeen(),
+      bindings: [SplashScreenBinding()],
+    ),
     GetPage(
       name: onboardingoneScreen,
       page: () => const OnboardingOneScreen(),
@@ -100,12 +161,10 @@ class AppRoutes {
         name: productList,
         page: () => const ProductListScreen(),
         bindings: [ProductListBinding()]),
-
     GetPage(
         name: productDetail,
         page: () => const ProductDetailScreen(),
         bindings: [ProductDetailBinding()]),
-
     GetPage(
         name: addProduct,
         page: () => const AddProductScreen(),
@@ -114,7 +173,6 @@ class AppRoutes {
         name: addTourPackage,
         page: () => const AddTourPackageScreen(),
         bindings: [AddTourPackageBinding()]),
-
     GetPage(
         name: tourPackage,
         page: () => const TourPackageScreen(),

@@ -1,25 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/data/constants.dart';
+import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
+import 'package:tripmate/widgets/base_button.dart';
+import 'package:tripmate/widgets/custom_checkbox_button.dart';
+import 'package:tripmate/widgets/custom_elevated_button.dart';
 
 import '../../widgets/custom_text_form_field.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class RegistrationScreen extends GetWidget<RegistrationController> {
   const RegistrationScreen({super.key});
-
-  @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen>
-    with TickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +34,11 @@ class _RegistrationScreenState extends State<RegistrationScreen>
                       fontWeight: FontWeight.w900,
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: width * 0.6,
                     child: TabBar(
                       padding: const EdgeInsets.all(20),
-                      controller: _tabController,
+                      controller: controller.tabController,
                       tabs: const [
                         Tab(
                           child: Text(
@@ -71,19 +63,19 @@ class _RegistrationScreenState extends State<RegistrationScreen>
             centerTitle: true,
           ),
           body: TabBarView(
-            controller: _tabController,
-            children: const [LoginWidget(), RegisterWidget()],
+            controller: controller.tabController,
+            children: [LoginWidget(), RegisterWidget()],
           )),
     );
   }
 }
 
-class RegisterWidget extends StatelessWidget {
+class RegisterWidget extends GetWidget<RegistrationController> {
   const RegisterWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text('hello');
+    return Text('hello');
   }
 }
 
@@ -95,7 +87,7 @@ class LoginWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return SizedBox(
-      width: width,
+      width: width * 0.8,
       height: height * 0.4,
       child: Column(
         children: [
