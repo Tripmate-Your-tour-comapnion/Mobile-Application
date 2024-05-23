@@ -19,5 +19,7 @@ class Constants {
   static String cameraIcon = 'assets/icons/camera.svg';
   static String galleryIcon = 'assets/icons/gallery.svg';
   static String faqIcon = 'assets/icons/question-message.svg';
+  static String searchIcon = 'assets/icons/search.svg';
   static String profileImg = 'assets/images/profile.jpg';
+  static String hotelImg = 'assets/images/hotel.png';
 }
