@@ -25,4 +25,6 @@ class ImageConstant {
   static String imgSubtract = '$imagePath/img_subtract.svg';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
+  static String image1 = 'assets/images/image1.jpg';
+  static String image2 = 'assets/images/image2.jpg';
 }

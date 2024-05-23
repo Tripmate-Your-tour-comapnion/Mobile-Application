@@ -1,5 +1,8 @@
 export 'package:get/get.dart';
-
+export 'package:gap/gap.dart';
+export 'package:line_icons/line_icon.dart';
+export 'package:line_icons/line_icons.dart';
+export 'package:flutter_svg/flutter_svg.dart';
 export '../routes/routers.dart';
 export '../core/utils/pref_utils.dart';
 export '../core/utils/date_time_utils.dart';
@@ -14,3 +17,7 @@ export '../theme/app_decoration.dart';
 export '../theme/custom_button_style.dart';
 export '../theme/custom_text_style.dart';
 export '../theme/theme_helper.dart';
+export 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
+export 'package:smooth_page_indicator/smooth_page_indicator.dart';
+export 'package:flutter_map/flutter_map.dart';
+export 'package:latlong2/latlong.dart';
