@@ -18,7 +18,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed(AppRoutes.settingScreen);
+      Get.offNamed(AppRoutes.hotelHomeScreen);
       // Get.offNamed(AppRoutes.onboardingoneScreen);
     });
 
