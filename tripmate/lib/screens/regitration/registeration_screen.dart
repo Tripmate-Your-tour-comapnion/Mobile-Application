@@ -22,67 +22,67 @@ class RegistrationScreen extends GetWidget<RegistrationController> {
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: theme.colorScheme.background,
+        appBar: AppBar(
           backgroundColor: theme.colorScheme.background,
-          appBar: AppBar(
-            backgroundColor: theme.colorScheme.background,
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            bottom: PreferredSize(
-              preferredSize: Size(width, height * 0.17),
-              child: Column(
-                children: [
-                  Text(
-                    "TripMate",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: theme.colorScheme.onPrimary,
-                      fontWeight: FontWeight.w900,
-                    ),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          bottom: PreferredSize(
+            preferredSize: Size(width, height * 0.17),
+            child: Column(
+              children: [
+                Text(
+                  "TripMate",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 35,
+                    color: theme.colorScheme.onPrimary,
+                    fontWeight: FontWeight.w900,
                   ),
-                  Container(
-                    width: width * 0.6,
-                    child: TabBar(
-                      padding: const EdgeInsets.all(20),
-                      controller: controller.tabController,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      tabs: const [
-                        Tab(
-                          child: Text(
-                            'Login',
-                          ),
-                        ),
-                        Tab(
-                          child: Text(
-                            'Register',
-                          ),
-                        ),
-                      ],
-                      indicatorColor: theme.colorScheme.onPrimary,
-                      automaticIndicatorColorAdjustment: true,
-                      unselectedLabelColor: theme.colorScheme.primary,
-                      labelColor: theme.colorScheme.onPrimary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            centerTitle: true,
-          ),
-          body: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: SizedBox(
-              height: height - height * 0.2385,
-              child: TabBarView(
-                  controller: controller.tabController,
-                  children:  [
-                    LoginWidget(),
-                    RegisterWidget(),
-                  ],
                 ),
-              ),
+                Container(
+                  width: width * 0.6,
+                  child: TabBar(
+                    padding: const EdgeInsets.all(20),
+                    controller: controller.tabController,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    tabs: const [
+                      Tab(
+                        child: Text(
+                          'Login',
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Register',
+                        ),
+                      ),
+                    ],
+                    indicatorColor: theme.colorScheme.onPrimary,
+                    automaticIndicatorColorAdjustment: true,
+                    unselectedLabelColor: theme.colorScheme.primary,
+                    labelColor: theme.colorScheme.onPrimary,
+                  ),
+                ),
+              ],
             ),
           ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SizedBox(
+            height: height - height * 0.2385,
+            child: TabBarView(
+              controller: controller.tabController,
+              children: [
+                LoginWidget(),
+                RegisterWidget(),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -133,7 +133,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
             height: height * 0.04,
           ),
           Obx(
-            ()=> CustomTextFormField(
+            () => CustomTextFormField(
               width: width * 0.85,
               prefixConstraints:
                   const BoxConstraints(maxHeight: 30, minHeight: 30),
@@ -142,11 +142,11 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                 child: SvgPicture.asset(Constants.lockIcon),
               ),
               hintText: "Password",
-               obscureText: controller.passwodOscureText.value,
+              obscureText: controller.passwodOscureText.value,
               suffixConstraints:
                   const BoxConstraints(maxHeight: 30, minHeight: 30),
               suffix: InkWell(
-                onTap: (){
+                onTap: () {
                   controller.obscurePasswordSwitch();
                 },
                 child: Padding(
@@ -160,7 +160,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
             height: height * 0.04,
           ),
           Obx(
-            ()=> CustomTextFormField(
+            () => CustomTextFormField(
               width: width * 0.85,
               prefixConstraints:
                   const BoxConstraints(maxHeight: 30, minHeight: 30),
@@ -173,7 +173,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
               suffixConstraints:
                   const BoxConstraints(maxHeight: 30, minHeight: 30),
               suffix: InkWell(
-                onTap: (){
+                onTap: () {
                   controller.obscurePasswordSwitch();
                 },
                 child: Padding(
@@ -247,24 +247,12 @@ class RegisterWidget extends GetWidget<RegistrationController> {
             onPressed: () {
               controller.changeTabIndex(0);
             },
-            child: Text("Have an account?"),
+            child: const Text("Have an account?"),
             style: TextButton.styleFrom(
               textStyle: theme.textTheme.titleSmall,
               foregroundColor: theme.colorScheme.onPrimary,
             ),
           ),
-
-          // Stack(
-          //   children: [
-          //     // SvgPicture.asset(Constants.womenIcon,height: 30,),
-          //     SizedBox(
-          //       height: height * 0.3,
-          //       child: SvgPicture.asset(
-          //         Constants.regitsratinRect,
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
@@ -302,7 +290,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
             height: height * 0.04,
           ),
           Obx(
-            ()=> CustomTextFormField(
+            () => CustomTextFormField(
               width: width * 0.85,
               prefixConstraints:
                   const BoxConstraints(maxHeight: 30, minHeight: 30),
@@ -315,7 +303,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
               suffixConstraints:
                   const BoxConstraints(maxHeight: 30, minHeight: 30),
               suffix: InkWell(
-                onTap: (){
+                onTap: () {
                   controller.obscurePasswordSwitch();
                 },
                 child: Padding(
@@ -385,28 +373,16 @@ class LoginWidget extends GetWidget<RegistrationController> {
               print('google');
             },
           ),
-
           TextButton(
             onPressed: () {
               controller.changeTabIndex(1);
             },
-            child: const Text("Don't have account?"),
             style: TextButton.styleFrom(
               textStyle: theme.textTheme.titleSmall,
               foregroundColor: theme.colorScheme.onPrimary,
             ),
+            child: const Text("Don't have account?"),
           ),
-          // Stack(
-          //   children: [
-          //     // SvgPicture.asset(Constants.womenIcon,height: 30,),
-          //     SizedBox(
-          //       height: height * 0.3,
-          //       child: SvgPicture.asset(
-          //         Constants.regitsratinRect,
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
