@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/data/constants.dart';
 import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
@@ -10,7 +8,6 @@ import 'package:tripmate/widgets/base_button.dart';
 import 'package:tripmate/widgets/custom_checkbox_button.dart';
 import 'package:tripmate/widgets/custom_elevated_button.dart';
 
-import '../../theme/custom_text_style.dart';
 import '../../widgets/custom_text_form_field.dart';
 
 class RegistrationScreen extends GetWidget<RegistrationController> {
@@ -275,7 +272,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
             height: height * 0.04,
           ),
           CustomTextFormField(
-            width: width * 0.85,
+            width: width * 0.8,
             prefixConstraints:
                 const BoxConstraints(maxHeight: 30, minHeight: 30),
             prefix: Padding(
