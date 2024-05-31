@@ -19,7 +19,6 @@ class _SplashScreeenState extends State<SplashScreeen> {
 
     Future.delayed(const Duration(seconds: 2), () {
       Get.offNamed(AppRoutes.onboardingoneScreen);
-      double height = MediaQuery.of(context).size.height;
     });
 
     return SafeArea(
