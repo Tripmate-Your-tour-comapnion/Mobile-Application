@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tripmate/core/app_exports.dart';
+import '../onboarding/controller/onboarding_two_controller.dart';
 
-import '../../../core/app_exports.dart';
-
-class SplashScreeen extends StatefulWidget {
-  const SplashScreeen({Key? key})
-      : super(
-          key: key,
-        );
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreeen> createState() => _SplashScreeenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreeenState extends State<SplashScreeen> {
+class _SplashScreenState extends State<SplashScreen> {
+  final Controller controller = Get.put(Controller());
+
+  @override
+  void initState() {
+    super.initState();
+    // Navigate after 4 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      Get.offAllNamed(controller.route);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed(AppRoutes.hotelHomeScreen);
-      // Get.offNamed(AppRoutes.onboardingoneScreen);
-    });
 
     return SafeArea(
       child: Scaffold(
@@ -33,7 +37,11 @@ class _SplashScreeenState extends State<SplashScreeen> {
               Text(
                 "TripMate",
                 style: theme.textTheme.displayMedium,
-              )
+              ),
+              // const SizedBox(height: 20),
+              // CircularProgressIndicator(
+              //   color: theme.colorScheme.primary,
+              // ),
             ],
           ),
         ),
