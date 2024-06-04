@@ -216,6 +216,9 @@ class RegisterWidget extends GetWidget<RegistrationController> {
           SizedBox(
             width: width * 0.85,
             child: CustomElevatedButton(
+              onPressed: () {
+                Get.toNamed(AppRoutes.bottomNavigation);
+              },
               text: "Signup",
               buttonStyle: CustomButtonStyles.outlinePrimaryTL5,
               buttonTextStyle: const TextStyle(

@@ -12,7 +12,7 @@ class SearchField extends StatelessWidget {
       required this.screenHeight});
 
   final String hintText;
-  final Function onchanged;
+  final Function(String) onchanged;
   final TextEditingController? controller;
   final double screenWidth;
   final double screenHeight;
@@ -24,7 +24,7 @@ class SearchField extends StatelessWidget {
       width: screenWidth * 0.6,
       child: TextFormField(
         controller: controller,
-        onChanged: (value) {},
+        onChanged: onchanged,
         cursorHeight: screenHeight * 0.024,
         decoration: InputDecoration(
           alignLabelWithHint: true,

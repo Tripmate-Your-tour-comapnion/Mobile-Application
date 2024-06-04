@@ -28,11 +28,10 @@ import 'package:tripmate/screens/Tourpackage/tour_package_screen.dart';
 import 'package:tripmate/screens/packageDetail/Binding/package_detail_binding.dart';
 import 'package:tripmate/screens/packageDetail/package_detail_screen.dart';
 import 'package:tripmate/screens/productDetail/Binding/product_detail_binding.dart';
-import 'package:tripmate/screens/productDetail/program_detail.dart';
+import 'package:tripmate/screens/productDetail/product_detail.dart';
 
 import '../screens/BlogScreen/Binding/blogdetail_binding.dart';
 import '../screens/homescreen/Binding/home_bindings.dart';
-import '../screens/regitration/Binding/registration_bindings.dart';
 
 import '../screens/hotel/Binding/room_binding.dart';
 import '../screens/hotel/Binding/room_reservation_binding.dart';
@@ -40,14 +39,12 @@ import '../screens/hotel/hotels_screen.dart';
 import '../screens/hotel/room_payment_summary_screen.dart';
 
 import '../screens/onboarding/Binding/onboarding_one_binding.dart';
-import '../screens/onboarding/Binding/onboarding_two_binding.dart';
 
 //  Bindings
 
 import '../screens/onboarding/onboarding_one_screen.dart';
-import '../screens/onboarding/onboarding_two_screen.dart';
+
 import '../screens/regitration/registeration_screen.dart';
-import '../screens/homescreen/homescreen.dart';
 
 //  Core File
 
@@ -80,7 +77,8 @@ class AppRoutes {
   static const String hotelHomeScreen = '/hotels_screen';
   static const String editProfile = '/edit_profile_screen';
   static const String settingScreen = '/setting_screen';
-
+  static const String bottomNavigation = '/bottomNavigation';
+  static const String paymentwebView = '/paymentWebView';
   static List<GetPage> pages = [
     GetPage(
       name: roomDtailScreen,
@@ -108,6 +106,11 @@ class AppRoutes {
       bindings: [HotelBinding()],
     ),
     GetPage(
+      name: bottomNavigation,
+      page: () => BottomNavigation(),
+      bindings: [BottomNavBarBinding(), HomeScreenBinding()],
+    ),
+    GetPage(
       name: editProfile,
       page: () => const EditProfileScreen(),
       bindings: [EditProfileBinding()],
@@ -119,29 +122,25 @@ class AppRoutes {
     ),
     GetPage(
       name: initialRoute,
-      page: () => const SplashScreeen(),
-      bindings: [SplashScreenBinding()],
+      page: () => const SplashScreen(),
+      bindings: [SplashScreenBinding(),OnboardingOneBinding()],
     ),
     GetPage(
       name: onboardingoneScreen,
       page: () => const OnboardingOneScreen(),
       bindings: [OnboardingOneBinding()],
     ),
-    GetPage(
-      name: onboardingtwoScreen,
-      page: () => const OnboardingTwoScreen(),
-      bindings: [OnboardingTwoBinding()],
-    ),
+
     GetPage(
       name: registerationScreen,
       page: () => const RegistrationScreen(),
       bindings: [RegistrationBinding()],
     ),
-    GetPage(
-      name: initialRoute,
-      page: () => BottomNavigation(),
-      bindings: [BottomNavBarBinding()],
-    ),
+    // GetPage(
+    //   name: initialRoute,
+    //   page: () => BottomNavigation(),
+    //   bindings: [BottomNavBarBinding()],
+    // ),
     GetPage(
       name: discoveryDetail,
       page: () => DiscoveryDetail(),
@@ -154,16 +153,16 @@ class AppRoutes {
     ),
     GetPage(
       name: shoplist,
-      page: () => const ShopListScreen(),
+      page: () => ShopListScreen(),
       bindings: [ShopListBinding()],
     ),
     GetPage(
         name: productList,
-        page: () => const ProductListScreen(),
+        page: () => ProductListScreen(),
         bindings: [ProductListBinding()]),
     GetPage(
         name: productDetail,
-        page: () => const ProductDetailScreen(),
+        page: () => ProductDetailScreen(),
         bindings: [ProductDetailBinding()]),
     GetPage(
         name: addProduct,
@@ -180,6 +179,10 @@ class AppRoutes {
     GetPage(
         name: packageDetail,
         page: () => const PackageDetailScreen(),
-        bindings: [PackageDetailScreenBinding()])
+        bindings: [PackageDetailScreenBinding()]),
+    // GetPage(
+    //     name: paymentwebView,
+    //     page: () => PaymentViewScreen(),
+    //     bindings: [WebViewBinding()])
   ];
 }

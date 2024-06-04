@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:tripmate/widgets/placelocation.dart';
 import 'package:tripmate/widgets/placename.dart';
 
@@ -53,7 +51,7 @@ class TourPackageScreen extends StatelessWidget {
                           left: screenWidth * 0.05, top: screenHeight * 0.0116),
                       child: SearchField(
                         hintText: "Search for Everything",
-                        onchanged: () {},
+                        onchanged: (value) {},
                         controller: null,
                         screenWidth: screenWidth * 1.1,
                         screenHeight: screenHeight,
@@ -144,7 +142,7 @@ Container tourAgentCard(double screenWidth, double screenHeight) {
         Gap(screenWidth * 0.02),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.036),
-          child: Container(
+          child: SizedBox(
             width: screenWidth * 2,
             child: Row(
               children: [

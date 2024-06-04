@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:tripmate/screens/ProductList/Controller/product_list_controller.dart';
+import 'package:tripmate/screens/hotel/rooms_list_screen.dart';
 import 'package:tripmate/widgets/placename.dart';
 
 import '../../core/app_exports.dart';
 import '../../widgets/custom_elevated_button.dart';
-import '../../widgets/placelocation.dart';
+import '../../widgets/produxt_card.dart';
 import '../../widgets/searchfield.dart';
 
 class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({super.key});
+  ProductListScreen({super.key});
+
+  ProductListController controller = ProductListController();
+
+  final arguments = Get.arguments as Map<String, dynamic>;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,9 @@ class ProductListScreen extends StatelessWidget {
                     left: screenWidth * 0.05, top: screenHeight * 0.0116),
                 child: SearchField(
                   hintText: "Search for Everything",
-                  onchanged: () {},
+                  onchanged: (value) {
+                    controller.filterProductList(value);
+                  },
                   controller: null,
                   screenWidth: screenWidth * 1.1,
                   screenHeight: screenHeight,
@@ -71,85 +79,80 @@ class ProductListScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: screenWidth * 0.03,
           ),
-          child: SizedBox(
-            height: screenHeight * 0.8,
-            width: screenWidth,
-            child: gridView(screenWidth, screenHeight),
-          ),
+          child: FutureBuilder(
+              future: controller.fetchProduct(arguments['owner_id']),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox(
+                    height: screenHeight * 0.8,
+                    width: screenWidth,
+                    child: ListView.builder(
+                      itemCount: 5, // Number of items to display
+                      itemBuilder: (context, index) {
+                        return Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          child: Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.all(5),
+                              height: screenHeight * 0.15,
+                              width: screenWidth,
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10),
+                              )),
+                        );
+                      },
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  return Obx(
+                    () {
+                      return SizedBox(
+                        height: screenHeight * 0.8,
+                        width: screenWidth,
+                        child: ListView.builder(
+                          itemCount: controller.filteredProductList
+                              .length, // Number of items to display
+                          itemBuilder: (context, index) {
+                            final product =
+                                controller.filteredProductList[index];
+
+                            return ProductCard(
+                              imageUrl: product.productImages[0],
+                              name: product.productName,
+                              total: product.productQuantity,
+                              price: product.productPrice,
+                              availableProduct: product.productAvailable,
+                              description: product.productDescription,
+                              ontap: () {
+                                Get.toNamed(AppRoutes.productDetail,
+                                    arguments: {
+                                      'id': product.id,
+                                    });
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
+                }
+              }),
         ),
       ]),
     )));
   }
 
-  GridView gridView(double screenWidth, double screenHeight) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: screenWidth * 0.02,
-          mainAxisSpacing: screenHeight * 0.02,
-          mainAxisExtent: screenHeight * 0.32),
-      itemCount: 30, // Number of items to display
-      itemBuilder: (context, index) {
-        return productCard(
-          screenWidth,
-          screenHeight,
-          () {
-            Get.toNamed(AppRoutes.productDetail);
-          },
-        );
-      },
-    );
+  Text title(double screenWidth, String title) {
+    return Text(title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: theme.colorScheme.onPrimary,
+            fontSize: screenWidth * 0.043));
   }
-}
-
-GestureDetector productCard(
-    double screenWidth, double screenHeight, VoidCallback ontap) {
-  return GestureDetector(
-    onTap: ontap,
-    child: ClipRRect(
-      borderRadius: BorderRadius.all(
-        Radius.circular(screenWidth * 0.04),
-      ),
-      child: Container(
-        margin: EdgeInsets.only(top: screenHeight * 0.02),
-        height: screenHeight * 0.3,
-        width: screenWidth / 2,
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(231, 239, 233, 1),
-          borderRadius: BorderRadius.all(
-            Radius.circular(screenWidth * 0.07),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Image.asset(
-              ImageConstant.image1,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: screenHeight * 0.2,
-            ),
-            Gap(screenHeight * 0.02),
-            PlaceTitle(placeName: "Scarph", screenWidth: screenWidth),
-            Gap(screenHeight * 0.0),
-            Text(
-              '450 Birr',
-              style: TextStyle(
-                  fontSize: screenWidth * 0.03, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-Text title(double screenWidth, String title) {
-  return Text(title,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-          fontWeight: FontWeight.w600,
-          color: theme.colorScheme.onPrimary,
-          fontSize: screenWidth * 0.043));
 }
