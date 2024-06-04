@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../core/app_exports.dart'; // ignore_for_file: must_be_immutable
+import '../core/app_exports.dart';
 
-// ignore_for_file: must_be_immutable
 class CustomCheckboxButton extends StatelessWidget {
   CustomCheckboxButton(
       {Key? key,
@@ -68,8 +67,8 @@ class CustomCheckboxButton extends StatelessWidget {
   Widget get leftSideCheckbox => Row(
         children: [
           Padding(
+            padding: const EdgeInsets.only(right: 8),
             child: checkboxWidget,
-            padding: EdgeInsets.only(right: 8),
           ),
           isExpandedText ? Expanded(child: textWidget) : textWidget
         ],

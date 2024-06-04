@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../core/app_exports.dart';
@@ -5,10 +7,6 @@ import '../core/app_exports.dart';
 LightCodeColors get appTheme => ThemeHelper().themeColor();
 ThemeData get theme => ThemeHelper().themeData();
 
-/// Helper class for managing themes and colors.
-// ignore_for_file: must_be_immutable
-
-// ignore_for_file: must_be_immutable
 class ThemeHelper {
   // The current app theme
   final _appTheme = PrefUtils().getThemeData();
@@ -23,9 +21,9 @@ class ThemeHelper {
     'lightCode': ColorSchemes.lightCodeColorScheme
   };
 
-  /// Changes the app theme to [_newTheme].
-  void changeTheme(String _newTheme) {
-    PrefUtils().setThemeData(_newTheme);
+  /// Changes the app theme to [newTheme].
+  void changeTheme(String newTheme) {
+    PrefUtils().setThemeData(newTheme);
     Get.forceAppUpdate();
   }
 
@@ -59,8 +57,8 @@ class ThemeHelper {
         ),
       ),
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateColor.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateColor.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return colorScheme.primary;
           }
           return Colors.transparent;

@@ -1,10 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/hotel/controller/room_controller.dart';
-import 'package:tripmate/screens/hotel/controller/room_reservation_controller.dart';
 import 'package:tripmate/screens/hotel/model/hotel_model.dart';
 import 'package:tripmate/screens/hotel/model/room_model.dart';
 import 'package:tripmate/widgets/custom_elevated_button.dart';
@@ -14,48 +12,60 @@ import 'room_detail_screen.dart';
 
 class RoomListScreen extends GetWidget<RoomController> {
   RoomListScreen({super.key});
-  final hotel = Get.arguments as HotelModel;
 
   @override
   Widget build(BuildContext context) {
-    final rooms = controller.findRoomByHotelId(hotel.id.toString()).value;
-
+    final hotel = Get.arguments as HotelModel;
+    print(hotel.companyName);
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         backgroundColor: theme.colorScheme.background,
-        title: Text(hotel.name),
+        title: Text(hotel.companyName!),
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: SafeArea(
-            child: SizedBox(
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return CustomRoomCard(
-                name: rooms[index].roomName,
-                total: rooms[index].roomAmount,
-                price: rooms[index].roomPrice,
-                rooms: rooms[index].roomsAvailable,
-                bookOnPresse: () {},
-                cardOnPresse: () => controller.goToRoomDetail(rooms[index].id),
-                room: rooms[index],
-              );
-            },
-            itemCount: rooms.length,
-          ),
-        )),
+        child: FutureBuilder(
+            future: controller.fetchRoomsOfHotel(hotel.hotelId!),
+            builder: (context, snapshot) =>
+                snapshot.connectionState == ConnectionState.waiting
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: theme.colorScheme.onPrimary,
+                        ),
+                      )
+                    : SafeArea(
+                        child: SizedBox(
+                        child: FutureBuilder(
+                          future: controller.fetchRoomsOfHotel(hotel.hotelId!),
+                          builder: (context, snapshot) => ListView.builder(
+                            itemBuilder: (context, index) {
+                              return CustomRoomCard(
+                                name: controller.rooms[index].roomName!,
+                                total: controller.rooms[index].roomAmount!,
+                                price: controller.rooms[index].roomPrice!,
+                                rooms: controller.rooms[index].roomAvailable!,
+                                bookOnPresse: () {},
+                                cardOnPresse: () => controller.goToRoomDetail(
+                                    controller.rooms[index].roomId!.toString()),
+                                room: controller.rooms[index],
+                              );
+                            },
+                            itemCount: controller.rooms.length,
+                          ),
+                        ),
+                      ))),
       ),
     );
   }
 }
 
-class CustomRoomCard extends GetWidget<RoomReservationController> {
+class CustomRoomCard extends GetWidget<RoomController> {
   @override
-  final controller = RoomReservationController();
+  final controller = RoomController();
   final String name;
   final int total;
-  final double price;
+  final int price;
   final int rooms;
   final VoidCallback bookOnPresse;
   final VoidCallback cardOnPresse;
@@ -98,8 +108,9 @@ class CustomRoomCard extends GetWidget<RoomReservationController> {
                   bottomLeft: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
-                child: Image.asset(
-                  Constants.hotelImg,
+                child: FadeInImage.assetNetwork(
+                  placeholder: Constants.hotelImg,
+                  image: room.roomImage![0],
                   fit: BoxFit.cover,
                 ),
               ),
@@ -141,7 +152,7 @@ class CustomRoomCard extends GetWidget<RoomReservationController> {
                       width: width * 0.05,
                     ),
                     Text.rich(TextSpan(
-                        text: "$price USD",
+                        text: "$price BIRR",
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -162,6 +173,7 @@ class CustomRoomCard extends GetWidget<RoomReservationController> {
                   children: [
                     Text(
                       "$rooms Available",
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -171,7 +183,7 @@ class CustomRoomCard extends GetWidget<RoomReservationController> {
                       width: width * 0.13,
                     ),
                     CustomElevatedButton(
-                      width: width * 0.23,
+                      width: width * 0.2,
                       height: height * 0.04,
                       text: "BOOK",
                       buttonStyle: CustomButtonStyles.outlinePrimaryTL5,

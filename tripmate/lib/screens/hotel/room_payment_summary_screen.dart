@@ -1,8 +1,11 @@
+// ignore_for_file: unused_import, unused_local_variable, unnecessary_import
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/hotel/controller/hotel_contrller.dart';
 import 'package:tripmate/screens/hotel/controller/room_reservation_controller.dart';
+import 'package:tripmate/screens/hotel/room_payment_with_chapa.dart';
 import 'package:tripmate/widgets/custom_elevated_button.dart';
 
 import '../../theme/theme_helper.dart';
@@ -46,9 +49,7 @@ class RoomPaymentSummaryScreen extends GetWidget<RoomReservationController> {
             ),
             SettingsListItemWidget(
               title: "Hotel",
-              value: hotelController
-                  .findById(int.parse(info['room'].hotelId))
-                  .name,
+              value: hotelController.findById(info['room'].owner).companyName!,
             ),
             SettingsListItemWidget(
               title: "check in",
@@ -76,6 +77,17 @@ class RoomPaymentSummaryScreen extends GetWidget<RoomReservationController> {
               height: height * 0.03,
             ),
             CustomElevatedButton(
+              onPressed: () async {
+                await controller.reserveRoom(
+                    info['room'].roomId,
+                    DateFormat("d/M/y").format(info['checkInDate']),
+                    DateFormat("d/M/y").format(info['checkOutDate']),
+                    info['numberOfRooms'],
+                    info['numberOfRooms']);
+                Get.back();
+                Get.to(ChapaPaymentScreen(url: controller.paymentUrl.value),
+                    transition: Transition.cupertinoDialog);
+              },
               width: width * 0.3,
               text: "Pay",
               buttonStyle: CustomButtonStyles.outlinePrimaryTL10,

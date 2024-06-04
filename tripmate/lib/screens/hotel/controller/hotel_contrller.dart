@@ -1,81 +1,32 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/hotel/model/hotel_model.dart';
 
-import '../../../data/constants.dart';
-
 class HotelController extends GetxController {
-  final RxList<HotelModel> _originalHotels = [
-    HotelModel(
-      id: 1,
-      name: 'Hotel 1',
-      location: 'Location 1',
-      rate: 50.0,
-      services: ['Service A', 'Service B'],
-      imgs: [
-        Constants.hotelImg,
-        Constants.profileImg,
-        Constants.hotelImg,
-        Constants.profileImg,
-        Constants.hotelImg,
-        Constants.profileImg
-      ],
-      description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      price: 100.0,
-    ),
-    HotelModel(
-      id: 2,
-      name: 'Hotel 2',
-      location: 'Location 2',
-      rate: 60.0,
-      services: ['Service C', 'Service D'],
-      imgs: [
-        Constants.hotelImg,
-        Constants.profileImg,
-        Constants.hotelImg,
-        Constants.profileImg,
-        Constants.hotelImg,
-        Constants.profileImg
-      ],
-      description: 'Description for Hotel 2',
-      price: 120.0,
-    ),
-    // Add more hotels with ids as needed
-  ].obs;
+  final RxList<HotelModel> _originalHotels = <HotelModel>[].obs;
 
-  RxList<HotelModel> _hotels = <HotelModel>[].obs;
+  List<HotelModel> get hotels => _originalHotels;
 
-  List<HotelModel> get hotels => _hotels.toList();
-
-  void goToHotelDetail(int id) {
+  void goToHotelDetail(String id) {
     Get.toNamed(AppRoutes.hotelDetailScreen, arguments: findById(id));
   }
 
   final TextEditingController searchController = TextEditingController();
 
   @override
-  void onInit() {
-    _hotels.assignAll(_originalHotels);
+  void onInit() async {
     searchController.addListener(() {
-      searchHotels(searchController.text);
+      fetchHotels(searchController.text);
     });
+    await fetchHotels('');
     super.onInit();
   }
 
-  void searchHotels(String query) {
-    if (query.isEmpty) {
-      _hotels.assignAll(_originalHotels);
-    } else {
-      _hotels.assignAll(_originalHotels.where((hotel) {
-        return hotel.name.toLowerCase().contains(query.toLowerCase());
-      }).toList());
-    }
-  }
-
-  HotelModel findById(int id) {
-    return _hotels.firstWhere((hotel) => id == hotel.id);
+  HotelModel findById(String id) {
+    return _originalHotels.firstWhere((hotel) => id == hotel.hotelId);
   }
 
   final RxBool _isDescriptionExpanded = false.obs;
@@ -89,5 +40,28 @@ class HotelController extends GetxController {
   void goToRoomListScreen(HotelModel hotel) {
     // Get.back();
     Get.toNamed(AppRoutes.roomListScreen, arguments: hotel);
+  }
+
+  Future fetchHotels(String hotelName) async {
+    String baseUrl = dotenv.get('BASEURL');
+    String url = '$baseUrl/user/search-hotel/$hotelName';
+
+    Dio dio = Dio();
+
+    try {
+      final response = await dio.get(url);
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        _originalHotels.value =
+            data.map((hotelJson) => HotelModel.fromJson(hotelJson)).toList();
+      } else {
+        if (kDebugMode) {
+          print('Failed to load hotels: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 }

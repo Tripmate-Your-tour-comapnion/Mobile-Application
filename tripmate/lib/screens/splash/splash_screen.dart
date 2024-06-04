@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../core/app_exports.dart';
 
@@ -16,10 +17,14 @@ class _SplashScreeenState extends State<SplashScreeen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed(AppRoutes.hotelHomeScreen);
-      // Get.offNamed(AppRoutes.onboardingoneScreen);
+      final tripmate = GetStorage();
+      if (tripmate.read('isOpendBefore') != null) {
+        Get.offNamed(AppRoutes.tourpackageScreen);
+      } else {
+        Get.offNamed(AppRoutes.onboardingoneScreen);
+      }
     });
 
     return SafeArea(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../core/app_exports.dart';
 
-
-
-void main() {
+Future main() async {
+  await GetStorage.init();
+  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const TripMateApp());
 }
@@ -12,9 +14,14 @@ void main() {
 class TripMateApp extends StatelessWidget {
   const TripMateApp({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
+  
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, 
+      statusBarIconBrightness: Brightness
+          .dark, 
+    ));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripMate',
@@ -22,9 +29,8 @@ class TripMateApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-        initialRoute: AppRoutes.initialRoute,
-        getPages: AppRoutes.pages,
+      initialRoute: AppRoutes.initialRoute,
+      getPages: AppRoutes.pages,
     );
   }
 }
-

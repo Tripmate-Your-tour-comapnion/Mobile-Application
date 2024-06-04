@@ -7,6 +7,7 @@ class Constants {
   static String mailIcon = 'assets/icons/mail.svg';
   static String lockIcon = 'assets/icons/lock.svg';
   static String eyeIcon = 'assets/icons/eye.svg';
+
   static String googleIcon = 'assets/icons/google.svg';
   static String womenIcon = 'assets/icons/women.svg';
   static String regitsratinRect = 'assets/icons/regitsratin_rect.svg';
@@ -21,5 +22,6 @@ class Constants {
   static String faqIcon = 'assets/icons/question-message.svg';
   static String searchIcon = 'assets/icons/search.svg';
   static String profileImg = 'assets/images/profile.jpg';
-  static String hotelImg = 'assets/images/hotel.png';
+  static String hotelImg = 'assets/images/hotel_place_holder.png';
+  static String imgPlaceHolder = 'assets/images/image_place_holder.png';
 }
