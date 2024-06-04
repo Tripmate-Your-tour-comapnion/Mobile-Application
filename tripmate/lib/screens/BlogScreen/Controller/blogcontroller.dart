@@ -1,43 +1,65 @@
 // ignore_for_file: avoid_print, empty_catches
 
 import 'package:dio/dio.dart';
-
-import '../../../core/app_exports.dart';
+import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../Model/blog_model.dart';
 
 class BlogController extends GetxController {
   static final dio = Dio();
   final List<BlogModel> _blogList = [];
-  static const url =
-      "https://tripmate-tourism-management.onrender.com/blogs/get-all";
+  final String url = "${dotenv.env['BACKEND_URL']}/blogs/get-all";
   List<BlogModel> get blogs => _blogList;
+  var filteredBlogList = <BlogModel>[].obs;
 
-  void fetchAndSetBlog() async {
+  @override
+  void onInit() {
+    super.onInit();
+    fetchAndSetBlog();
+  }
+
+  Future<void> fetchAndSetBlog() async {
     try {
       final response = await dio.get(
         url,
         options: Options(
           method: 'GET',
           headers: {
-            'Authorization': '',
+            'Authorization': '', // You might want to add your token here
           },
         ),
       );
 
-      for (int i = 0; i < response.data.length; i++) {
-        var blogModel = response.data[i];
-        print('Response data length: ${response.data.length}');
-
-        _blogList.add(BlogModel(
-          id: blogModel['_id'],
-          title: blogModel['blog_title'],
-          description: blogModel['blog_description'],
-          imageUrl: blogModel['blog_image'],
-          dateTime: blogModel['blog_date'],
-        ));
-
+      if (response.statusCode == 200) {
+        _blogList.clear(); // Clear the list before adding new data
+        for (var blogData in response.data) {
+          _blogList.add(BlogModel(
+            id: blogData['_id'],
+            title: blogData['blog_title'],
+            description: blogData['blog_description'],
+            imageUrl: blogData['blog_image'],
+            dateTime: blogData['blog_date'],
+          ));
+        }
+        filteredBlogList.assignAll(_blogList);
         update();
+      } else {
+        // Handle the case where the response is not 200
+        print('Failed to load blogs: ${response.statusCode}');
       }
-    } catch (e) {}
+    } catch (e) {
+      print('Error fetching blogs: $e');
+    }
+  }
+
+  void filterBlogList(String value) {
+    if (value.isEmpty) {
+      filteredBlogList.assignAll(_blogList);
+    } else {
+      filteredBlogList.assignAll(_blogList.where(
+        (blog) => blog.title.toLowerCase().contains(value.toLowerCase()),
+      ));
+    }
+    update();
   }
 }

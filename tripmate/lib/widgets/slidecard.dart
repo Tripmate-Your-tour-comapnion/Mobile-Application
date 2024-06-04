@@ -13,6 +13,7 @@ class SlideCard extends StatelessWidget {
   final String? loctaion;
   final VoidCallback? ontap;
   final IconData? icondata;
+  final String? description;
 
   const SlideCard({
     super.key,
@@ -25,6 +26,7 @@ class SlideCard extends StatelessWidget {
     required this.icondata,
     required this.screenWidth,
     required this.screenHeight,
+    this.description,
   });
 
   // ignore: empty_constructor_bodies
@@ -41,11 +43,24 @@ class SlideCard extends StatelessWidget {
               height: screenHeight * 0.3,
               width: screenWidth,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(ImageConstant.image2), fit: BoxFit.cover),
-                color: color,
                 borderRadius:
                     BorderRadius.all(Radius.circular(screenWidth * 0.039)),
+              ),
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(screenWidth * 0.039)),
+                child: FadeInImage.assetNetwork(
+                  placeholder:
+                      ImageConstant.image1, // Path to your placeholder image
+                  image: imageUrl!,
+                  fit: BoxFit.cover,
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      ImageConstant.image1, // Path to your error image
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -55,10 +70,11 @@ class SlideCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PlaceTitle(placeName: placeName, screenWidth: screenWidth),
+                PlaceTitle(
+                    placeName: placeName, screenWidth: screenWidth / 1.18),
                 PlaceLocation(
                     icondata: icondata,
-                    screenWidth: screenWidth,
+                    screenWidth: screenWidth / 1.2,
                     loctaion: loctaion)
               ],
             ),

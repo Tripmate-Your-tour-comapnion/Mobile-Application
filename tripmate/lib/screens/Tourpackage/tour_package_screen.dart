@@ -4,6 +4,9 @@ import 'package:tripmate/screens/Tourpackage/controller/tour_package_controller.
 import 'package:tripmate/screens/Tourpackage/model/tourpackage_model.dart';
 import 'package:tripmate/screens/agent_detail_screen/controller/agent_controller.dart';
 import 'package:tripmate/widgets/custom_text_form_field.dart';
+
+import 'package:flutter/material.dart';
+
 import 'package:tripmate/widgets/placelocation.dart';
 import 'package:tripmate/widgets/placename.dart';
 

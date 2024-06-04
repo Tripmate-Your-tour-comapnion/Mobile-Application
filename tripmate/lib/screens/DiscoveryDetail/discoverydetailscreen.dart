@@ -14,6 +14,8 @@ class DiscoveryDetail extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final size = MediaQuery.of(context).size;
+    final arguments = Get.arguments as Map<String, dynamic>;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight + screenHeight * 0.03),
@@ -78,7 +80,7 @@ class DiscoveryDetail extends StatelessWidget {
                         screenHeight: screenHeight,
                         index: index,
                         color: theme.colorScheme.onPrimary,
-                        imageUrl: null,
+                        imageUrl: arguments['imageurl'],
                         placeName: "",
                         loctaion: "",
                         icondata: null,
@@ -112,7 +114,7 @@ class DiscoveryDetail extends StatelessWidget {
                   Row(
                     children: [
                       PlaceTitle(
-                          placeName: "Chamo Lake",
+                          placeName: arguments['placeName'],
                           screenWidth: screenWidth * 1.2),
                       Gap(screenWidth * 0.02),
                       const Text(
@@ -147,7 +149,7 @@ class DiscoveryDetail extends StatelessWidget {
                             style: TextStyle(
                                 color: theme.colorScheme.onPrimary
                                     .withOpacity(0.5)),
-                            "Lorem ipsum dolorsiLoremsiLoremsiLorem siLorem   siLoremsiLoremsiLoremsiLoremsiLorem siLorem ipsum dolor sit amet consectetur.Lorem ipsum dolor sit amet consectetur.Lorem ipsum dolor sit amet consectetur.t amet consectetur. is id."),
+                            arguments['description'] as String),
                       )),
                   PlaceTitle(
                       placeName: "Location", screenWidth: screenWidth * 1),
@@ -158,7 +160,8 @@ class DiscoveryDetail extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
                             Radius.circular(screenWidth * 0.1))),
-                    child: mapView(screenWidth),
+                    child: mapView(screenWidth, arguments['location'].lat,
+                        arguments['location'].lng),
                   ),
                   Gap(screenHeight * 0.013),
                 ],
@@ -181,10 +184,10 @@ Text title(Size size, String title) {
           fontSize: size.width * 0.06));
 }
 
-Widget mapView(double screenWidth) {
+Widget mapView(double screenWidth, double latitude, double longtude) {
   return FlutterMap(
-      options: const MapOptions(
-          initialCenter: LatLng(6.0333, 37.55),
+      options: MapOptions(
+          initialCenter: LatLng(latitude, longtude),
           initialZoom: 8,
           interactionOptions:
               InteractionOptions(flags: ~InteractiveFlag.doubleTapZoom)),
@@ -192,7 +195,7 @@ Widget mapView(double screenWidth) {
         openStreetMapTileLayer,
         MarkerLayer(markers: [
           Marker(
-              point: const LatLng(6.0333, 37.55),
+              point: LatLng(latitude, longtude),
               child: Icon(
                 Icons.location_pin,
                 size: screenWidth * 0.1,

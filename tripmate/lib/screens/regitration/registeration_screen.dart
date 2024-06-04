@@ -307,9 +307,6 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                 ),
               ),
             ),
-            SizedBox(
-              height: height * 0.01,
-            ),
             Text(
               "Or connect with",
               style: theme.textTheme.bodyMedium,

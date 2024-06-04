@@ -15,7 +15,7 @@ class PlaceTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       placeName!,
-      maxLines: 2,
+      maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontWeight: FontWeight.w700,

@@ -1,10 +1,10 @@
+import 'package:tripmate/screens/onboarding/controller/onboarding_two_controller.dart';
+
 import '../../../core/app_exports.dart';
-import '../controller/onboarding_one_Controller.dart';
 
 class OnboardingOneBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => OnboardingOneController());
+    Get.lazyPut(() => Controller());
   }
-
 }

@@ -67,51 +67,53 @@ class BlogDetail extends StatelessWidget {
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: screenHeight * 0.02,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              now.format(pattern: 'MM-dd-yyyy'),
-                              style: const TextStyle(
-                                fontFamily: 'PlusJakartaSans',
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.w500,
-                                height: 13.0 / 10.0,
-                                letterSpacing: -0.165,
-                              ),
-                            ),
-                            const Text(
-                              'Tripmate',
-                              style: TextStyle(
-                                fontFamily: 'PlusJakartaSans',
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.w500,
-                                height: 13.0 / 10.0,
-                                letterSpacing: -0.165,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.02,
-                        ),
-                        Text(
-                          detail[1]['detail'],
-                          textAlign: TextAlign.justify,
-                          style: const TextStyle(
-                            fontFamily: 'poppins',
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            height: 13.0 / 10.0,
-                            letterSpacing: -0.165,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: screenHeight * 0.02,
                           ),
-                        ),
-                      ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                now.format(pattern: 'MM-dd-yyyy'),
+                                style: const TextStyle(
+                                  fontFamily: 'PlusJakartaSans',
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.w500,
+                                  height: 13.0 / 10.0,
+                                  letterSpacing: -0.165,
+                                ),
+                              ),
+                              const Text(
+                                'Tripmate',
+                                style: TextStyle(
+                                  fontFamily: 'PlusJakartaSans',
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.w500,
+                                  height: 13.0 / 10.0,
+                                  letterSpacing: -0.165,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: screenHeight * 0.02,
+                          ),
+                          Text(
+                            detail[1]['detail'],
+                            textAlign: TextAlign.justify,
+                            style: const TextStyle(
+                              fontFamily: 'poppins',
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500,
+                              height: 13.0 / 10.0,
+                              letterSpacing: -0.165,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )
