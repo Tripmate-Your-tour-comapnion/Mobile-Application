@@ -151,7 +151,7 @@ class AppRoutes {
     GetPage(
       name: initialRoute,
       page: () => const SplashScreen(),
-      bindings: [SplashScreenBinding(), OnboardingOneBinding()],
+      bindings: [SplashScreenBinding()],
     ),
     GetPage(
       name: onboardingoneScreen,

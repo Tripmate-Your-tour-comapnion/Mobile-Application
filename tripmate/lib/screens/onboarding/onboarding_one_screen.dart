@@ -60,7 +60,7 @@ class _OnboardingOneScreenState extends State<OnboardingOneScreen> {
                             width: size.width * 0.85,
                             child: Lottie.asset(ImageConstant.baganimation),
                           ),
-                          const Gap(80),
+                          const Gap(60),
                           Container(
                             width: 311,
                             margin: EdgeInsets.only(left: size.width * 0.04),

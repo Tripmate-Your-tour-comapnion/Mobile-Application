@@ -7,6 +7,7 @@ import 'package:tripmate/screens/BottomNavigation/controller/bottomnavcontroller
 import 'package:tripmate/screens/homescreen/Controller/home_controller.dart';
 
 import '../../theme/theme_helper.dart';
+import '../setting/setting_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -39,6 +40,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
             children: [
               HomeScreen(),
               BlogScreen(),
+              BlogScreen(),
+              SettingScreen()
               // Add other screens here
             ],
           ),

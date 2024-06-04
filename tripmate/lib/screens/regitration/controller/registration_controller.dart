@@ -42,9 +42,7 @@ class RegistrationController extends GetxController
 
   Future<void> login(String email, String password) async {
     String baseUrl = dotenv.get('BASEURL');
-    if (kDebugMode) {
-      print(email + password);
-    }
+    if (kDebugMode) {}
     Dio dio = Dio();
     String loginUrl = '$baseUrl/user/login';
     Map<String, dynamic> loginData = {
@@ -57,11 +55,10 @@ class RegistrationController extends GetxController
 
       // Handle the response
       if (response.statusCode == 200) {
-        // print("token: ${await getTokenFromData(response)}");
-        // goToHomePage();
         if (kDebugMode) {
           print('logged in');
         }
+        Get.toNamed(AppRoutes.bottomNavigation);
       } else {
         if (kDebugMode) {
           print('Login failed. ${response.data}');

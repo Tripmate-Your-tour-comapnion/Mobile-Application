@@ -195,7 +195,7 @@ class SettingProfile extends GetWidget<SettingController> {
                 height: height * 0.04,
                 child: CustomElevatedButton(
                   onPressed: () {
-                    controller.goToEditProfile();
+                    Get.toNamed(AppRoutes.editProfile);
                   },
                   text: "Edit profile",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL10,

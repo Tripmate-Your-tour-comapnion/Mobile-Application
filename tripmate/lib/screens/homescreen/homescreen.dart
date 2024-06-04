@@ -193,12 +193,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     Gap(screenWidth * 0.06),
-                    circularButton(screenWidth, screenHeight, Icons.hotel,
-                        "Hotels", () {}),
+                    circularButton(
+                        screenWidth, screenHeight, Icons.hotel, "Hotels", () {
+                      Get.toNamed(AppRoutes.hotelHomeScreen);
+                    }),
                     Gap(screenWidth * 0.06),
                     circularButton(
                         screenWidth, screenHeight, Icons.tour, "Tour", () {
-                      Get.toNamed(AppRoutes.packageDetail);
+                      Get.toNamed(AppRoutes.tourPackage);
                     }),
                   ]),
                   Gap(screenHeight * 0.02),

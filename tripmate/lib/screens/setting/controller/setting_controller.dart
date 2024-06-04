@@ -4,7 +4,7 @@ import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/setting/model/setting_model.dart';
 
 class SettingController extends GetxController {
-  Rx<SettingModel> settingModel = SettingModel().obs;
+  // Rx<SettingModel> settingModel = SettingModel().obs;
 
   void goToEditProfile() {
     Get.toNamed(AppRoutes.editProfile);

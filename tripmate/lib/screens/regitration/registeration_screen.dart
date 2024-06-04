@@ -105,6 +105,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
       ProgressDialogUtils.showProgressDialog();
       await controller.singUp(
           fullName.text, email.text, password.text, rePassword.text);
+
       // ProgressDialogUtils.hideProgressDialog();
     }
 
@@ -422,7 +423,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                   Gap(width * 0.08),
                   if (controller.showErrorPassword.value)
                     const Text(
-                      "Wrong password",
+                      "Wrong Username or Password",
                       style: TextStyle(color: Colors.red, fontSize: 12),
                     ),
                 ],
@@ -467,7 +468,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                 onPressed: () {
                   return _validator();
                 },
-                text: "Signup",
+                text: "Login",
                 buttonStyle: CustomButtonStyles.outlinePrimaryTL5,
                 buttonTextStyle: const TextStyle(
                     color: Colors.white,

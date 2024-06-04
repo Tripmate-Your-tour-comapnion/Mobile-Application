@@ -21,11 +21,11 @@ import 'controller/setting_controller.dart';
 class EditProfileScreen extends GetWidget<EditProfileController> {
   EditProfileScreen({super.key});
 
-  final response = Get.arguments['response'];
+  // final response = Get.arguments['response'];
 
   @override
   Widget build(BuildContext context) {
-    print('respose from profile $response');
+    // print('respose from profile $response');
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       body: SingleChildScrollView(
@@ -37,9 +37,9 @@ class EditProfileScreen extends GetWidget<EditProfileController> {
               children: [
                 SettingProfile(
                   profileImgPath: controller.imgPath.value,
-                  fulName: response['body']['full_name'],
-                  email: response['body']['email'],
-                  id: response['body']['_id'],
+                  fulName: "Brikti Teklu",
+                  email: "brktiteklu@gmail.com",
+                  id: "",
                 ),
               ],
             ),
