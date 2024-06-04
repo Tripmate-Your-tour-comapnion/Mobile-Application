@@ -1,3 +1,5 @@
+import 'package:get_storage/get_storage.dart';
+
 import '../../../core/app_exports.dart';
 import '../model/onboarding_two_model.dart';
 

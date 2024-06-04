@@ -22,5 +22,6 @@ class Constants {
   static String faqIcon = 'assets/icons/question-message.svg';
   static String searchIcon = 'assets/icons/search.svg';
   static String profileImg = 'assets/images/profile.jpg';
-  static String hotelImg = 'assets/images/hotel.png';
+  static String hotelImg = 'assets/images/hotel_place_holder.png';
+  static String imgPlaceHolder = 'assets/images/image_place_holder.png';
 }

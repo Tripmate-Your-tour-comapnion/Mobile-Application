@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/hotel/controller/hotel_contrller.dart';
 import 'package:tripmate/widgets/custom_text_form_field.dart';
@@ -25,10 +26,17 @@ class HotelsScreen extends GetWidget<HotelController> {
               SizedBox(
                 height: height * 0.05,
               ),
-              CustomSearchWidget(
-                hint: "Search",
-                contentPadding: EdgeInsets.symmetric(vertical: height * 0.02),
-                controller: controller.searchController,
+              FutureBuilder(
+                future: controller.fetchHotels(''),
+                builder: (context, snapshot) =>
+                    snapshot.connectionState == ConnectionState.waiting
+                        ? searchShimmer(context)
+                        : CustomSearchWidget(
+                            hint: "Search",
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: height * 0.02),
+                            controller: controller.searchController,
+                          ),
               ),
             ],
           )),
@@ -39,34 +47,48 @@ class HotelsScreen extends GetWidget<HotelController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "Hotels",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onPrimary),
-              ),
-            ),
-            Expanded(child: Obx(() {
-              final hotels = controller.hotels;
-
-              return Obx(
-                () => ListView.builder(
-                    itemCount: controller.hotels.length,
-                    itemBuilder: (context, index) {
-                      return HotelCard(
-                        onTap: () {
-                          controller.goToHotelDetail(hotels[index].id);
-                        },
-                        name: hotels[index].name,
-                        location: hotels[index].location,
-                        services: hotels[index].services,
-                        rate: hotels[index].rate.toString(),
-                      );
-                    }),
-              );
-            }))
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: FutureBuilder(
+                  future: controller.fetchHotels(''),
+                  builder: (context, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting
+                          ? textShimmer(context)
+                          : Text(
+                              "Hotels",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.onPrimary),
+                            ),
+                )),
+            Expanded(
+                child: FutureBuilder(
+                    future: controller.fetchHotels(''),
+                    builder: (context, snapshot) => snapshot.connectionState ==
+                            ConnectionState.waiting
+                        ? ListView.builder(
+                            itemBuilder: (context, index) =>
+                                cardShimmer(context),
+                            itemCount: 3,
+                          )
+                        : Obx(() {
+                            return ListView.builder(
+                                itemCount: controller.hotels.length,
+                                itemBuilder: (context, index) {
+                                  return HotelCard(
+                                      name:
+                                          controller.hotels[index].companyName!,
+                                      address:
+                                          controller.hotels[index].address!,
+                                      profileImg: controller
+                                          .hotels[index].profileImage!,
+                                      // description: controller.hotels[index].description!,
+                                      onTap: () {
+                                        controller.goToHotelDetail(
+                                            controller.hotels[index].hotelId!);
+                                      });
+                                });
+                          })))
           ],
         )),
       ),
@@ -109,17 +131,17 @@ class CustomIconTextComponent extends StatelessWidget {
 
 class HotelCard extends StatelessWidget {
   final String name;
-  final String location;
-  final rate;
-  final List<String> services;
+  final String address;
+  final String profileImg;
+  // final String description;
   final VoidCallback onTap;
   const HotelCard({
     super.key,
     required this.name,
-    required this.location,
-    required this.rate,
-    required this.services,
+    required this.address,
+    // required this.description,
     required this.onTap,
+    required this.profileImg,
   });
 
   @override
@@ -133,58 +155,41 @@ class HotelCard extends StatelessWidget {
         width: width,
         height: height * 0.3,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Color.fromRGBO(231, 239, 233, 1),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.12),
-                  spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: Offset(0, 5))
-            ]),
+          borderRadius: BorderRadius.circular(25),
+          color: theme.colorScheme.onPrimary.withOpacity(0.8),
+          border: Border.all(color: theme.colorScheme.onPrimary),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-              child: Image.asset(
-                Constants.hotelImg,
+              child: FadeInImage.assetNetwork(
+                placeholder: Constants.hotelImg,
+                image: profileImg,
                 fit: BoxFit.cover,
+                alignment: Alignment.center,
+                height: height * 0.2,
+                width: width,
               ),
             ),
             Padding(
               padding: EdgeInsets.only(right: 8, left: 8, top: 8),
-              child: Text(
-                name,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                    color: theme.colorScheme.onPrimary),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on,
-                        color: Colors.amber,
-                        size: 16,
-                      ),
-                      Text(
-                        location,
-                        style: theme.textTheme.bodyMedium,
-                      )
-                    ],
+                  Text(
+                    name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        color: theme.colorScheme.background),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
-                    width: width * 0.17,
-                    height: height * 0.04,
+                    width: width * 0.1,
+                    height: height * 0.03,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.white,
@@ -192,17 +197,12 @@ class HotelCard extends StatelessWidget {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.star,
+                        children: const [
+                          Icon(
+                            Icons.verified,
                             color: Colors.amber,
                             size: 16,
                           ),
-                          Text(
-                            rate,
-                            overflow: TextOverflow.fade,
-                            style: theme.textTheme.bodyMedium,
-                          )
                         ],
                       ),
                     ),
@@ -210,19 +210,23 @@ class HotelCard extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              height: height * 0.05,
-              width: width * 0.9,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: services.length,
-                  itemBuilder: (context, index) {
-                    return CustomIconTextComponent(
-                      service: services[index],
-                    );
-                  }),
-            )
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Icon(
+                    Icons.location_on,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
+                  Text(
+                    address,
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -270,4 +274,152 @@ class CustomSearchWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget textShimmer(BuildContext context) {
+  final height = MediaQuery.of(context).size.height;
+  final width = MediaQuery.of(context).size.width;
+
+  return Shimmer.fromColors(
+    baseColor: Colors.grey.shade300,
+    highlightColor: Colors.grey.shade100,
+    enabled: true,
+    child: Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      width: width * 0.2,
+      height: height * 0.03,
+    ),
+  );
+}
+
+Widget searchShimmer(BuildContext context) {
+  final height = MediaQuery.of(context).size.height;
+  return Shimmer.fromColors(
+    baseColor: Colors.grey.shade300,
+    highlightColor: Colors.grey.shade100,
+    enabled: true,
+    child: Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      padding: EdgeInsets.symmetric(
+          vertical: height * 0.02, horizontal: height * 0.02),
+      child: CustomTextFormField(
+        textInputAction: TextInputAction.search,
+        prefix: Padding(
+          padding: EdgeInsets.only(right: height * 0.01, left: height * 0.03),
+          child: SvgPicture.asset(
+            Constants.searchIcon,
+          ),
+        ),
+        prefixConstraints: const BoxConstraints(maxHeight: 30, minHeight: 30),
+        contentPadding: EdgeInsets.symmetric(vertical: height * 0.02),
+        filled: true,
+        fillColor: const Color.fromRGBO(231, 239, 233, 1),
+        borderDecoration: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none),
+        hintStyle: theme.textTheme.bodyMedium,
+        textStyle: theme.textTheme.titleSmall,
+      ),
+    ),
+  );
+}
+
+Widget cardShimmer(BuildContext context) {
+  final height = MediaQuery.of(context).size.height;
+  final width = MediaQuery.of(context).size.width;
+
+  return Shimmer.fromColors(
+    baseColor: Colors.grey.shade300,
+    highlightColor: Colors.grey.shade100,
+    enabled: true,
+    child: Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      width: width,
+      height: height * 0.3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: theme.colorScheme.onPrimary.withOpacity(0.8),
+        border: Border.all(color: theme.colorScheme.onPrimary),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+            child: Container(
+              height: height * 0.2,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 8, left: 8, top: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: width * 0.1,
+                ),
+                Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    enabled: true,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      width: width * 0.1,
+                      height: height * 0.03,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey.shade300,
+                              highlightColor: Colors.grey.shade100,
+                              enabled: true,
+                              child: Icon(
+                                Icons.verified,
+                                size: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Icon(
+                  Icons.location_on,
+                  color: Colors.amber,
+                  size: 16,
+                ),
+                Shimmer.fromColors(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.grey.shade100,
+                  enabled: true,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    width: width * 0.1,
+                    height: height * 0.03,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

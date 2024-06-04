@@ -21,6 +21,7 @@ class HotelDetailScreen extends GetWidget<HotelController> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    print(hotel.hotelId);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
@@ -42,39 +43,26 @@ class HotelDetailScreen extends GetWidget<HotelController> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  Constants.hotelImg,
+                FadeInImage.assetNetwork(
+                  placeholder: Constants.hotelImg,
+                  image: hotel.profileImage!,
                   fit: BoxFit.cover,
                   height: height * 0.35,
+                  width: width,
                 ),
-                TitleOfHotelDescription(title: hotel.name),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  width: width * 0.15,
-                  height: height * 0.03,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                        color: theme.colorScheme.onPrimary.withOpacity(0.2)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                        size: 16,
-                      ),
-                      Text(
-                        hotel.rate.toString(),
-                        overflow: TextOverflow.fade,
-                        style: theme.textTheme.bodyMedium,
-                      )
-                    ],
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TitleOfHotelDescription(title: hotel.companyName!),
+                    const Icon(
+                      Icons.verified,
+                      color: Colors.amber,
+                      size: 16,
+                    ),
+                  ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 20),
+                  margin: const EdgeInsets.only(left: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -84,10 +72,10 @@ class HotelDetailScreen extends GetWidget<HotelController> {
                         size: 16,
                       ),
                       SizedBox(
-                        height: height * 0.05,
+                        height: height * 0.03,
                       ),
                       Text(
-                        hotel.location,
+                        hotel.address!,
                         overflow: TextOverflow.fade,
                         style: theme.textTheme.bodyMedium,
                       )
@@ -102,17 +90,17 @@ class HotelDetailScreen extends GetWidget<HotelController> {
                   child: Obx(() {
                     String discriptionSubString = '';
                     bool isExpanded = controller.isExpanded;
-                    if (hotel.description.length > 90) {
+                    if (hotel.description!.length > 90) {
                       if (!isExpanded) {
                         discriptionSubString =
-                            hotel.description.substring(0, 90);
+                            hotel.description!.substring(0, 90);
                       } else {
-                        discriptionSubString = hotel.description;
+                        discriptionSubString = hotel.description!;
                       }
                     }
 
                     return Text.rich(TextSpan(
-                      text: hotel.description.length > 90
+                      text: hotel.description!.length > 90
                           ? discriptionSubString
                           : hotel.description,
                       style: TextStyle(
@@ -120,7 +108,7 @@ class HotelDetailScreen extends GetWidget<HotelController> {
                           fontSize: 12,
                           color: theme.colorScheme.primary),
                       children: [
-                        if (hotel.description.length > 90)
+                        if (hotel.description!.length > 90)
                           TextSpan(
                             text: isExpanded ? 'Read less' : '... Read more',
                             style: const TextStyle(
@@ -149,14 +137,15 @@ class HotelDetailScreen extends GetWidget<HotelController> {
                         height: height * 0.08,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            hotel.imgs[index],
+                          child: FadeInImage.assetNetwork(
+                            image: hotel.images![index],
+                            placeholder: Constants.imgPlaceHolder,
                             fit: BoxFit.cover,
                           ),
                         ),
                       );
                     },
-                    itemCount: hotel.imgs.length,
+                    itemCount: hotel.images!.length,
                     scrollDirection: Axis.horizontal,
                   ),
                 ),

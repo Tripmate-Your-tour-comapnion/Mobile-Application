@@ -172,23 +172,23 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(
-            screenWidth * 0.05,
-            screenHeight * 0.03,
-            0,
-            0,
-          ),
-          child: Text(
-            "Blog",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: screenWidth * 0.05,
-              fontWeight: FontWeight.w600,
-              fontFamily: "PlusJakartaSans",
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.fromLTRB(
+        //     screenWidth * 0.05,
+        //     screenHeight * 0.03,
+        //     0,
+        //     0,
+        //   ),
+        //   child: Text(
+        //     "Blog",
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontSize: screenWidth * 0.05,
+        //       fontWeight: FontWeight.w600,
+        //       fontFamily: "PlusJakartaSans",
+        //     ),
+        //   ),
+        // ),
         Padding(
           padding: EdgeInsets.only(
             top: screenHeight * 0.04,

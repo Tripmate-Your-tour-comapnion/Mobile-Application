@@ -1,14 +1,17 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:ui';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:intl/intl.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/data/constants.dart';
 import 'package:tripmate/screens/hotel/controller/room_controller.dart';
-import 'package:tripmate/screens/hotel/controller/room_reservation_controller.dart';
 
 import 'package:tripmate/screens/hotel/model/room_model.dart';
-import 'package:tripmate/screens/hotel/model/room_reservation_model.dart';
 
 import '../../widgets/custom_elevated_button.dart';
 
@@ -16,7 +19,7 @@ class RoomDetailScreen extends GetWidget<RoomController> {
   RoomDetailScreen({super.key});
 
   final controller = Get.put(RoomController());
-  final reserveController = Get.put(RoomReservationController());
+
   final room = Get.arguments as RoomModel;
 
   @override
@@ -31,8 +34,9 @@ class RoomDetailScreen extends GetWidget<RoomController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(children: [
-              Image.asset(
-                Constants.hotelImg,
+              FadeInImage.assetNetwork(
+                placeholder: Constants.hotelImg,
+                image: room.roomImage![0],
                 width: width,
                 height: height * 0.3,
                 fit: BoxFit.cover,
@@ -77,7 +81,7 @@ class RoomDetailScreen extends GetWidget<RoomController> {
                     ),
                   ),
                   Text.rich(TextSpan(
-                      text: "500 USD",
+                      text: '${room.roomPrice!}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -98,12 +102,18 @@ class RoomDetailScreen extends GetWidget<RoomController> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.star_rate,
-                    color: Colors.amber,
+                  InkWell(
+                    onTap: () => RateingDialog.showRatingDialog(
+                        context, controller, room.roomId!),
+                    child: const Icon(
+                      Icons.star_rate,
+                      color: Colors.amber,
+                    ),
                   ),
                   Text(
-                    "4.5",
+                    room.roomRate!.value.toString().length < 3
+                        ? room.roomRate!.value.toString()
+                        : room.roomRate!.value.toString().substring(0, 3),
                     style: theme.textTheme.bodyMedium,
                   )
                 ],
@@ -124,8 +134,7 @@ class RoomDetailScreen extends GetWidget<RoomController> {
                   ),
                   TextButton(
                       onPressed: () {
-                        PayForRoomPopUp.showDialog(
-                            reserveController, context, room);
+                        PayForRoomPopUp.showDialog(controller, context, room);
                       },
                       child: Text(
                         "Book Now",
@@ -140,18 +149,18 @@ class RoomDetailScreen extends GetWidget<RoomController> {
             Obx(() {
               String discriptionSubString = '';
               bool isExpanded = controller.isExpanded;
-              if (room.roomDescription.length > 90) {
+              if (room.roomDescription!.length > 90) {
                 if (!isExpanded) {
-                  discriptionSubString = room.roomDescription.substring(0, 90);
+                  discriptionSubString = room.roomDescription!.substring(0, 90);
                 } else {
-                  discriptionSubString = room.roomDescription;
+                  discriptionSubString = room.roomDescription!;
                 }
               }
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text.rich(TextSpan(
-                  text: room.roomDescription.length > 90
+                  text: room.roomDescription!.length > 90
                       ? discriptionSubString
                       : room.roomDescription,
                   style: TextStyle(
@@ -159,7 +168,7 @@ class RoomDetailScreen extends GetWidget<RoomController> {
                       fontSize: 12,
                       color: theme.colorScheme.primary),
                   children: [
-                    if (room.roomDescription.length > 90)
+                    if (room.roomDescription!.length > 90)
                       TextSpan(
                         text: isExpanded ? '  Read less' : '... Read more',
                         style: const TextStyle(
@@ -182,8 +191,9 @@ class RoomDetailScreen extends GetWidget<RoomController> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        Constants.hotelImg,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: Constants.hotelImg,
+                        image: room.roomImage![0],
                         height: height * 0.33,
                         width: width * 0.4,
                         fit: BoxFit.cover,
@@ -193,8 +203,9 @@ class RoomDetailScreen extends GetWidget<RoomController> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            Constants.hotelImg,
+                          child: FadeInImage.assetNetwork(
+                            placeholder: Constants.hotelImg,
+                            image: room.roomImage![1],
                             height: height * 0.15,
                             width: width * 0.43,
                             fit: BoxFit.cover,
@@ -205,8 +216,9 @@ class RoomDetailScreen extends GetWidget<RoomController> {
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            Constants.hotelImg,
+                          child: FadeInImage.assetNetwork(
+                            placeholder: Constants.hotelImg,
+                            image: room.roomImage![2],
                             height: height * 0.15,
                             width: width * 0.43,
                             fit: BoxFit.cover,
@@ -224,8 +236,8 @@ class RoomDetailScreen extends GetWidget<RoomController> {
 }
 
 class PayForRoomPopUp {
-  static void showDialog(RoomReservationController controller,
-      BuildContext context, RoomModel room) {
+  static void showDialog(
+      RoomController controller, BuildContext context, RoomModel room) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     showModalBottomSheet(
@@ -376,10 +388,11 @@ class PayForRoomPopUp {
             SizedBox(
               height: height * 0.05,
             ),
-            Container(
+            SizedBox(
               width: width * 0.5,
               child: CustomElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   controller.goToPay(
                       room,
                       controller.selectedCheckinDate.value,
@@ -397,6 +410,68 @@ class PayForRoomPopUp {
           ],
         ),
       ),
+    );
+  }
+}
+
+class RateingDialog {
+  static void showRatingDialog(
+      BuildContext context, RoomController controller, String roomId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Rate this Room',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      controller.rateRoom(roomId, rating);
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Submit',
+                      style: theme.textTheme.titleSmall,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

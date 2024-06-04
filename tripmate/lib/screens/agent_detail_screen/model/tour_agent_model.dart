@@ -1,6 +1,8 @@
-class HotelModel {
+// ignore_for_file: unnecessary_new, prefer_collection_literals
+
+class TourAgentModel {
   PaymentInfo? paymentInfo;
-  String? hotelId;
+  String? agentId;
   String? companyName;
   String? description;
   String? profileImage;
@@ -9,9 +11,9 @@ class HotelModel {
   String? bussinessLicense;
   int? iV;
 
-  HotelModel(
+  TourAgentModel(
       {this.paymentInfo,
-      this.hotelId,
+      this.agentId,
       this.companyName,
       this.description,
       this.profileImage,
@@ -20,11 +22,11 @@ class HotelModel {
       this.bussinessLicense,
       this.iV});
 
-  HotelModel.fromJson(Map<String, dynamic> json) {
+  TourAgentModel.fromJson(Map<String, dynamic> json) {
     paymentInfo = json['payment_info'] != null
         ? new PaymentInfo.fromJson(json['payment_info'])
         : null;
-    hotelId = json['_id'];
+    agentId = json['_id'];
     companyName = json['company_name'];
     description = json['description'];
     profileImage = json['profile_image'];
@@ -36,17 +38,17 @@ class HotelModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.paymentInfo != null) {
-      data['payment_info'] = this.paymentInfo!.toJson();
+    if (paymentInfo != null) {
+      data['payment_info'] = paymentInfo!.toJson();
     }
-    data['_id'] = this.hotelId;
-    data['company_name'] = this.companyName;
-    data['description'] = this.description;
-    data['profile_image'] = this.profileImage;
-    data['address'] = this.address;
-    data['images'] = this.images;
-    data['bussiness_license'] = this.bussinessLicense;
-    data['__v'] = this.iV;
+    data['_id'] = agentId;
+    data['company_name'] = companyName;
+    data['description'] = description;
+    data['profile_image'] = profileImage;
+    data['address'] = address;
+    data['images'] = images;
+    data['bussiness_license'] = bussinessLicense;
+    data['__v'] = iV;
     return data;
   }
 }
@@ -68,10 +70,10 @@ class PaymentInfo {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['acc_name'] = this.accName;
-    data['acc_number'] = this.accNumber;
-    data['bank'] = this.bank;
-    data['subaccount_id'] = this.subaccountId;
+    data['acc_name'] = accName;
+    data['acc_number'] = accNumber;
+    data['bank'] = bank;
+    data['subaccount_id'] = subaccountId;
     return data;
   }
 }

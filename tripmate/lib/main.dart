@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tripmate/screens/onboarding/onboarding_one_screen.dart';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../core/app_exports.dart';
-import 'screens/onboarding/controller/onboarding_two_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +21,8 @@ class TripMateApp extends StatelessWidget {
     // Set the status bar color and icon brightness here
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.white, // Set the color of the status bar
-      statusBarIconBrightness: Brightness
-          .dark, // Set the brightness of the icons (Brightness.dark for dark icons)
+
+      statusBarIconBrightness: Brightness.dark,
     ));
 
     return GetMaterialApp(

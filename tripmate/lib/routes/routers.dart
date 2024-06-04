@@ -1,5 +1,10 @@
 //  Screens
 
+// ignore_for_file: unused_import, duplicate_import
+
+import 'package:tripmate/screens/agent_detail_screen/agent_deatil_screen.dart';
+import 'package:tripmate/screens/agent_detail_screen/bindings/agent_binding.dart';
+import 'package:tripmate/screens/Tourpackage/controller/tour_package_controller.dart';
 import 'package:tripmate/screens/hotel/Binding/hotel_binding.dart';
 import 'package:tripmate/screens/hotel/hotel_detail_screen.dart';
 import 'package:tripmate/screens/hotel/room_detail_screen.dart';
@@ -32,6 +37,9 @@ import 'package:tripmate/screens/productDetail/product_detail.dart';
 
 import '../screens/BlogScreen/Binding/blogdetail_binding.dart';
 import '../screens/homescreen/Binding/home_bindings.dart';
+import '../screens/hotel/controller/room_reservation_controller.dart';
+import '../screens/hotel/room_payment_with_chapa.dart';
+import '../screens/regitration/Binding/registration_bindings.dart';
 
 import '../screens/hotel/Binding/room_binding.dart';
 import '../screens/hotel/Binding/room_reservation_binding.dart';
@@ -78,8 +86,28 @@ class AppRoutes {
   static const String editProfile = '/edit_profile_screen';
   static const String settingScreen = '/setting_screen';
   static const String bottomNavigation = '/bottomNavigation';
+
+  static const String tourpackageScreen = '/tourpackage_screen';
+  static const String agentDetailScreen = '/agent_detial_contrller';
+
   static const String paymentwebView = '/paymentWebView';
+
   static List<GetPage> pages = [
+    GetPage(
+      name: agentDetailScreen,
+      page: () => AgentDeatilScreen(),
+      bindings: [AgentBinding()],
+    ),
+    GetPage(
+      name: tourpackageScreen,
+      page: () => TourPackageScreen(),
+      bindings: [TourPackageBinding()],
+    ),
+    GetPage(
+      name: bottomNavigation,
+      page: () => BottomNavigation(),
+      bindings: [BottomNavBarBinding(), HomeScreenBinding()],
+    ),
     GetPage(
       name: roomDtailScreen,
       page: () => RoomDetailScreen(),
@@ -112,7 +140,7 @@ class AppRoutes {
     ),
     GetPage(
       name: editProfile,
-      page: () => const EditProfileScreen(),
+      page: () => EditProfileScreen(),
       bindings: [EditProfileBinding()],
     ),
     GetPage(
@@ -123,24 +151,18 @@ class AppRoutes {
     GetPage(
       name: initialRoute,
       page: () => const SplashScreen(),
-      bindings: [SplashScreenBinding(),OnboardingOneBinding()],
+      bindings: [SplashScreenBinding(), OnboardingOneBinding()],
     ),
     GetPage(
       name: onboardingoneScreen,
       page: () => const OnboardingOneScreen(),
       bindings: [OnboardingOneBinding()],
     ),
-
     GetPage(
       name: registerationScreen,
       page: () => const RegistrationScreen(),
       bindings: [RegistrationBinding()],
     ),
-    // GetPage(
-    //   name: initialRoute,
-    //   page: () => BottomNavigation(),
-    //   bindings: [BottomNavBarBinding()],
-    // ),
     GetPage(
       name: discoveryDetail,
       page: () => DiscoveryDetail(),
@@ -174,15 +196,11 @@ class AppRoutes {
         bindings: [AddTourPackageBinding()]),
     GetPage(
         name: tourPackage,
-        page: () => const TourPackageScreen(),
+        page: () => TourPackageScreen(),
         bindings: [TourPackageBinding()]),
     GetPage(
         name: packageDetail,
-        page: () => const PackageDetailScreen(),
-        bindings: [PackageDetailScreenBinding()]),
-    // GetPage(
-    //     name: paymentwebView,
-    //     page: () => PaymentViewScreen(),
-    //     bindings: [WebViewBinding()])
+        page: () => PackageDetailScreen(),
+        bindings: [PackageDetailScreenBinding()])
   ];
 }
