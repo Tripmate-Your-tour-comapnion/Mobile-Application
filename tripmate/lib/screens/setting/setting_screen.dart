@@ -42,7 +42,9 @@ class SettingScreen extends StatelessWidget {
                             height: height * 0.03,
                           ),
                           SettingsListItemWidget(
-                            onPress: () {},
+                            onPress: () {
+                              Get.toNamed(AppRoutes.changePassword);
+                            },
                             title: "change password",
                             prefixIconPath: Constants.passChangeIcon,
                             sufixIconPath: Constants.arrowIcon,
@@ -77,12 +79,12 @@ class SettingScreen extends StatelessWidget {
                           SizedBox(
                             height: height * 0.01,
                           ),
-                          SettingsListItemWidget(
-                            onPress: () {},
-                            title: "FAQ",
-                            prefixIconPath: Constants.faqIcon,
-                            sufixIconPath: Constants.arrowIcon,
-                          ),
+                          // SettingsListItemWidget(
+                          //   onPress: () {},
+                          //   title: "FAQ",
+                          //   prefixIconPath: Constants.faqIcon,
+                          //   sufixIconPath: Constants.arrowIcon,
+                          // ),
                           SizedBox(
                             height: height * 0.01,
                           ),
@@ -229,43 +231,44 @@ class SettingsListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  prefixIconPath,
-                  height: 20,
-                ),
-                SizedBox(
-                  width: width * 0.03,
-                ),
-                Text(
-                  title,
-                  style: theme.textTheme.bodyLarge,
-                ),
-              ],
-            ),
-            InkWell(
-                onTap: () => onPress,
-                child: SvgPicture.asset(
-                  sufixIconPath,
-                  height: 20,
-                )),
-          ],
-        ),
-        SizedBox(
-          height: height * 0.01,
-        ),
-        Divider(
-          color: theme.colorScheme.onPrimary.withOpacity(0.1),
-        )
-      ],
+    return InkWell(
+      onTap: onPress,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    prefixIconPath,
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                  Text(
+                    title,
+                    style: theme.textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+              SvgPicture.asset(
+                sufixIconPath,
+                height: 20,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: height * 0.01,
+          ),
+          Divider(
+            color: theme.colorScheme.onPrimary.withOpacity(0.1),
+          )
+        ],
+      ),
     );
   }
 }

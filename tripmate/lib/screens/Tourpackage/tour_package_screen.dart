@@ -425,6 +425,7 @@ class subscribegDialog {
                         contentPadding: EdgeInsets.symmetric(
                             vertical: screenHeight * 0.012,
                             horizontal: screenWidth * 0.04),
+                        prefixIcon: null,
                       ),
                     ],
                   ),

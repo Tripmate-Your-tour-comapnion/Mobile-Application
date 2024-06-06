@@ -5,6 +5,6 @@ import '../../../core/app_exports.dart';
 class OnboardingOneBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => Controller());
+    Get.lazyPut(() => OnboardingController());
   }
 }

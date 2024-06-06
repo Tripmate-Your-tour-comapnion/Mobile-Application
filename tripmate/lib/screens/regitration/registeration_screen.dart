@@ -140,6 +140,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                 ),
               ),
               hintText: "Full Name",
+              prefixIcon: null,
             ),
             SizedBox(
               height: height * 0.04,
@@ -158,6 +159,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                 ),
               ),
               hintText: "Email Address",
+              prefixIcon: null,
             ),
             SizedBox(
               height: height * 0.04,
@@ -194,6 +196,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                     child: SvgPicture.asset(Constants.eyeIcon),
                   ),
                 ),
+                prefixIcon: null,
               ),
             ),
             SizedBox(
@@ -231,6 +234,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                     child: SvgPicture.asset(Constants.eyeIcon),
                   ),
                 ),
+                prefixIcon: null,
               ),
             ),
             SizedBox(
@@ -378,6 +382,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                 ),
               ),
               hintText: "Email Address",
+              prefixIcon: null,
             ),
             SizedBox(
               height: height * 0.04,
@@ -389,7 +394,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                   if (text.isEmpty) {
                     return 'please enter password';
                   }
-                  if (text.length < 8) {
+                  if (text.length < 6) {
                     return 'Password Too Short';
                   }
                   return null;
@@ -415,6 +420,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                     child: SvgPicture.asset(Constants.eyeIcon),
                   ),
                 ),
+                prefixIcon: null,
               ),
             ),
             Obx(
@@ -445,13 +451,15 @@ class LoginWidget extends GetWidget<RegistrationController> {
                             controller.rememberPasswordCheckbox.value = value;
                           },
                           value: controller.rememberPasswordCheckbox.value,
-                          text: "Remember password",
+                          text: "Remember Me",
                         ),
                       ),
                     ],
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.forgetPasswordScreen);
+                      },
                       child: Text(
                         "Forget password",
                         style: theme.textTheme.titleSmall,

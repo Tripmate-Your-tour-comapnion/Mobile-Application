@@ -81,6 +81,14 @@ class ThemeHelper {
   ThemeData themeData() => _getThemeData();
 }
 
+class WidgetStateColor {
+  static resolveWith(Color Function(dynamic states) param0) {}
+}
+
+class WidgetState {
+  static var selected;
+}
+
 /// Class containing the supported text theme styles.
 class TextThemes {
   static TextTheme textTheme(ColorScheme colorScheme) => TextTheme(
