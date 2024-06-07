@@ -30,5 +30,6 @@ class ImageConstant {
   static String travelanimation = 'assets/animations/bus_going.json';
   static String baganimation = 'assets/animations/bag.json';
   static String walkingMan = 'assets/animations/walk.json';
+  static String confirmEmail = 'assets/animations/confirm_email.json';
   static String map = 'assets/images/map.gif';
 }

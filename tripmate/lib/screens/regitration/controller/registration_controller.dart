@@ -14,6 +14,7 @@ class RegistrationController extends GetxController
 
   Rx<bool> rememberPasswordCheckbox = false.obs;
   Rx<int> tabBarIndex = 0.obs;
+  RxMap userData = {}.obs;
   late TabController tabController;
 
   @override
@@ -40,6 +41,20 @@ class RegistrationController extends GetxController
     Get.offNamed(AppRoutes.homescreen);
   }
 
+// token setter on GetStorage
+  Future tokenSetter(String token) async {
+    final user = GetStorage();
+    await user.write("token", token);
+  }
+
+// token getter from GetStorage
+  Future<String> tokenGetter() async {
+    final user = GetStorage();
+    return await user.read('token') ?? "";
+  }
+
+  // email confirmation checker
+
   Future<void> login(String email, String password) async {
     String baseUrl = dotenv.get('BASEURL');
     if (kDebugMode) {}
@@ -55,19 +70,27 @@ class RegistrationController extends GetxController
 
       // Handle the response
       if (response.statusCode == 200) {
-        if (kDebugMode) {
-          print('logged in');
+        tokenSetter(response.headers.value('set-cookie')!);
+
+        if (response.data['isConfirmed'] == true) {
+          Get.toNamed(AppRoutes.bottomNavigation);
         }
-        Get.toNamed(AppRoutes.bottomNavigation);
       } else {
         if (kDebugMode) {
-          print('Login failed. ${response.data}');
+          if (response.data['isConfirmed'] == false) {
+            print("please  confirm your email");
+          }
+          print('Login failed. ${response.data['isConfirmed']}');
         }
       }
     } on DioException catch (e) {
       if (e.response != null) {
         if (kDebugMode) {
-          print('Login failed. ${e.response?.data}');
+          if (e.response!.data['isConfirmed'] == false) {
+            print("please  confirm your email");
+          } else {
+            print("unkown error");
+          }
         }
         showErrorPassword.value = true;
       } else {
@@ -90,11 +113,15 @@ class RegistrationController extends GetxController
     return null; // Token not found in data
   }
 
-  Future singUp(
+  Future<void> singUp(
       String fullName, String email, String password, String rePassword) async {
     if (kDebugMode) {
-      print(fullName);
+      print('Full Name: $fullName');
+      print('Email: $email');
+      print('Password: $password');
+      print('Re-Password: $rePassword');
     }
+
     Dio dio = Dio();
     String baseUrl = dotenv.get('BASEURL');
     String signupUrl = '$baseUrl/user/signup';
@@ -107,38 +134,46 @@ class RegistrationController extends GetxController
       'role': dropValue.value,
     };
 
+    dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+
     try {
       final response = await dio.post(signupUrl, data: signupData);
 
       if (response.statusCode == 200) {
         if (kDebugMode) {
-          print(response);
+          print('succes ${response.data['success']}');
         }
-        Get.offNamed(AppRoutes.editProfile,
-            arguments: {'response': response.data});
-        if (kDebugMode) {
-          print('logged in ${response.data}');
-        }
+
+        userData.value = {
+          'success': response.data['success'],
+          'email': response.data['body']['email']
+        };
       } else {
         if (kDebugMode) {
-          print('Login failed. ${response.data}');
+          // print('Signup failed. Status code: ${response.statusCode}');
+          // print('Response data: ${response.data}');
         }
       }
     } on DioException catch (e) {
       if (e.response != null) {
         if (kDebugMode) {
-          print('Login failed. ${e.response?.data}');
+          // print('Dio error. Status code: ${e.response?.statusCode}');
+          // print('Error response data: ${e.response?.data}');
         }
         showErrorPassword.value = true;
       } else {
         if (kDebugMode) {
-          print('Error: $e');
+          // print('Dio error: $e');
         }
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error: $e');
+        // print('Unexpected error: $e');
       }
     }
+  }
+
+  void goTOConfirmEmail() {
+    Get.offNamed(AppRoutes.confirmEmailScreen);
   }
 }

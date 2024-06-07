@@ -105,6 +105,10 @@ class RegisterWidget extends GetWidget<RegistrationController> {
       ProgressDialogUtils.showProgressDialog();
       await controller.singUp(
           fullName.text, email.text, password.text, rePassword.text);
+      if (controller.userData['success']) {
+        Get.toNamed(AppRoutes.confirmEmailScreen,
+            arguments: controller.userData['email'] as String);
+      }
 
       // ProgressDialogUtils.hideProgressDialog();
     }
@@ -389,7 +393,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                   if (text.isEmpty) {
                     return 'please enter password';
                   }
-                  if (text.length < 8) {
+                  if (text.length < 6) {
                     return 'Password Too Short';
                   }
                   return null;

@@ -36,7 +36,7 @@ class EditProfileScreen extends GetWidget<EditProfileController> {
             child: Column(
               children: [
                 SettingProfile(
-                  profileImgPath: controller.imgPath.value,
+                  profileImgPath: "",
                   fulName: "Brikti Teklu",
                   email: "brktiteklu@gmail.com",
                   id: "",

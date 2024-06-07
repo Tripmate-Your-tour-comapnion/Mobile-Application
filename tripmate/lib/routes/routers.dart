@@ -5,6 +5,8 @@
 import 'package:tripmate/screens/agent_detail_screen/agent_deatil_screen.dart';
 import 'package:tripmate/screens/agent_detail_screen/bindings/agent_binding.dart';
 import 'package:tripmate/screens/Tourpackage/controller/tour_package_controller.dart';
+import 'package:tripmate/screens/confirm_email/bindings/confirm_email_bindings.dart';
+import 'package:tripmate/screens/confirm_email/confirm_email_screen.dart';
 import 'package:tripmate/screens/hotel/Binding/hotel_binding.dart';
 import 'package:tripmate/screens/hotel/hotel_detail_screen.dart';
 import 'package:tripmate/screens/hotel/room_detail_screen.dart';
@@ -91,8 +93,14 @@ class AppRoutes {
   static const String agentDetailScreen = '/agent_detial_contrller';
 
   static const String paymentwebView = '/paymentWebView';
+  static const String confirmEmailScreen = '/ConfirmEmail';
 
   static List<GetPage> pages = [
+    GetPage(
+      name: confirmEmailScreen,
+      page: () => ConfirmEmailScreen(),
+      bindings: [ConfirmEmailBindings()],
+    ),
     GetPage(
       name: agentDetailScreen,
       page: () => AgentDeatilScreen(),
