@@ -1,4 +1,5 @@
 import 'package:tripmate/screens/BlogScreen/Controller/blogcontroller.dart';
+import 'package:tripmate/screens/setting/controller/setting_controller.dart';
 
 import '../../homescreen/Controller/home_controller.dart';
 import '../controller/bottomnavcontroller.dart';
@@ -11,5 +12,6 @@ class BottomNavBarBinding extends Bindings {
     Get.lazyPut(() => BottomNavBarController());
     Get.lazyPut(() => HomeScreenController());
     Get.put(() => BlogController());
+    Get.put(() => SettingController());
   }
 }

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../core/app_exports.dart';
 
-class PaymentViewScreen extends StatefulWidget {
-  const PaymentViewScreen({super.key, required this.paymentUrl});
-  final String paymentUrl;
+class ForgotPasswordWebView extends StatefulWidget {
+  ForgotPasswordWebView({super.key, required this.resetUrl});
+  final String resetUrl;
   @override
-  State<PaymentViewScreen> createState() => _PaymentViewScreenState();
+  State<ForgotPasswordWebView> createState() => _ForgotPasswordWebViewState();
 }
 
-class _PaymentViewScreenState extends State<PaymentViewScreen> {
+class _ForgotPasswordWebViewState extends State<ForgotPasswordWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            "Payment Gateway",
+            "Forgot Password",
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -42,14 +42,26 @@ class _PaymentViewScreenState extends State<PaymentViewScreen> {
             controller: WebViewController()
               ..setJavaScriptMode(JavaScriptMode.unrestricted)
               ..setBackgroundColor(const Color(0x00000000))
-              ..loadRequest(Uri.parse(widget.paymentUrl))
+              ..loadRequest(Uri.parse(widget.resetUrl))
               ..setNavigationDelegate(NavigationDelegate(
                 onProgress: (int progress) {
                   // Update loading bar.
                 },
-                onPageFinished: (url) {},
+                onUrlChange: (change) {
+                  if (change.url ==
+                      'https://tourism-management-front.vercel.app/login') {
+                    Get.back();
+                  }
+                },
+                onPageStarted: (url) {
+                  if (url ==
+                      'https://tourism-management-front.vercel.app/login') {
+                    Get.back();
+                  }
+                },
                 onNavigationRequest: (NavigationRequest request) {
-                  if (request.url.startsWith('http://localhost:5173/thanks')) {
+                  if (request.url.startsWith(
+                      'https://tourism-management-front.vercel.app/login')) {
                     Get.back();
                   }
                   return NavigationDecision.navigate;

@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/homescreen/Controller/home_controller.dart';
+import 'package:tripmate/screens/hotel/controller/hotel_contrller.dart';
 import 'package:tripmate/widgets/shimmer_home..dart';
 import '../../widgets/searchfield.dart';
 import '../../widgets/slidecard.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final HomeScreenController controller = Get.find<HomeScreenController>();
-
+  final HotelController hotelController = HotelController();
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -26,7 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: FutureBuilder(
-          future: controller.fetchDestinations(),
+          future: Future.wait([
+            controller.fetchTopRatedHotels(),
+            controller.fetchDestinations(),
+          ]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const ShimmerHomeScreen();
@@ -207,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-                    child: title(screenWidth, "Popular Hotels"),
+                    child: title(screenWidth, "Top Rated Hotels"),
                   ),
                   // popular Hotels
                   Gap(screenHeight * 0.02),
@@ -221,16 +219,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           controller: PageController(
                               viewportFraction: 0.8), // Set viewport size
-                          itemCount: 4,
+                          itemCount: controller.topRatedHotels.length,
                           itemBuilder: (context, index) {
+                            final topRatedHotel =
+                                controller.topRatedHotels[index];
                             return SlideCard(
                               index: index,
                               color: theme.colorScheme.onPrimary,
-                              imageUrl: '',
-                              placeName: "Chamo Lake",
-                              loctaion: "Arbaminch,Ethiopia",
+                              imageUrl: topRatedHotel.profileImage,
+                              placeName: topRatedHotel.companyName,
+                              loctaion: topRatedHotel.address,
                               ontap: () {
-                                Get.toNamed(AppRoutes.tourPackage);
+                                hotelController
+                                    .goToRoomListScreen(topRatedHotel);
                               },
                               icondata: Icons.hotel,
                               screenWidth: screenWidth,

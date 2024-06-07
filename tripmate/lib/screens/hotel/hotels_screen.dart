@@ -271,6 +271,7 @@ class CustomSearchWidget extends StatelessWidget {
         hintText: hint,
         hintStyle: theme.textTheme.bodyMedium,
         textStyle: theme.textTheme.titleSmall,
+        prefixIcon: null,
       ),
     );
   }
@@ -319,6 +320,7 @@ Widget searchShimmer(BuildContext context) {
             borderSide: BorderSide.none),
         hintStyle: theme.textTheme.bodyMedium,
         textStyle: theme.textTheme.titleSmall,
+        prefixIcon: null,
       ),
     ),
   );

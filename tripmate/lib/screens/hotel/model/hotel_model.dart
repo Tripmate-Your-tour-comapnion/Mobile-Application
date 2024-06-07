@@ -24,7 +24,7 @@ class HotelModel {
     paymentInfo = json['payment_info'] != null
         ? new PaymentInfo.fromJson(json['payment_info'])
         : null;
-    hotelId = json['_id'];
+    hotelId = json['_id']['_id'];
     companyName = json['company_name'];
     description = json['description'];
     profileImage = json['profile_image'];

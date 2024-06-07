@@ -1,13 +1,10 @@
 // ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers
 
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/data/constants.dart';
 import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
-import 'package:tripmate/widgets/base_button.dart';
 import 'package:tripmate/widgets/custom_checkbox_button.dart';
 import 'package:tripmate/widgets/custom_elevated_button.dart';
 
@@ -144,6 +141,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                 ),
               ),
               hintText: "Full Name",
+              prefixIcon: null,
             ),
             SizedBox(
               height: height * 0.04,
@@ -162,6 +160,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                 ),
               ),
               hintText: "Email Address",
+              prefixIcon: null,
             ),
             SizedBox(
               height: height * 0.04,
@@ -198,6 +197,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                     child: SvgPicture.asset(Constants.eyeIcon),
                   ),
                 ),
+                prefixIcon: null,
               ),
             ),
             SizedBox(
@@ -235,6 +235,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                     child: SvgPicture.asset(Constants.eyeIcon),
                   ),
                 ),
+                prefixIcon: null,
               ),
             ),
             SizedBox(
@@ -382,6 +383,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                 ),
               ),
               hintText: "Email Address",
+              prefixIcon: null,
             ),
             SizedBox(
               height: height * 0.04,
@@ -419,6 +421,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
                     child: SvgPicture.asset(Constants.eyeIcon),
                   ),
                 ),
+                prefixIcon: null,
               ),
             ),
             Obx(
@@ -449,13 +452,15 @@ class LoginWidget extends GetWidget<RegistrationController> {
                             controller.rememberPasswordCheckbox.value = value;
                           },
                           value: controller.rememberPasswordCheckbox.value,
-                          text: "Remember password",
+                          text: "Remember Me",
                         ),
                       ),
                     ],
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.forgetPasswordScreen);
+                      },
                       child: Text(
                         "Forget password",
                         style: theme.textTheme.titleSmall,
