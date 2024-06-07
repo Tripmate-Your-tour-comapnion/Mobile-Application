@@ -1,10 +1,14 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:search_page/search_page.dart';
 
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/homescreen/Controller/home_controller.dart';
 import 'package:tripmate/screens/hotel/controller/hotel_contrller.dart';
 import 'package:tripmate/widgets/shimmer_home..dart';
-import '../../widgets/searchfield.dart';
+import '../../widgets/home_screen_search_field.dart';
+
 import '../../widgets/slidecard.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -83,9 +87,27 @@ class HomeScreen extends StatelessWidget {
                           padding: EdgeInsets.only(
                               left: screenWidth * 0.05,
                               top: screenHeight * 0.0116),
-                          child: SearchField(
+                          child: HomeSearchField(
                             hintText: "Search for Everything",
-                            onchanged: (value) {},
+                            ontap: () {
+                              // showSearch(
+                              //   context: context,
+                              //   delegate: SearchPage<Int>(
+                              //     items: [1, 2, 2],
+                              //     searchLabel: 'Search people',
+                              //     suggestion: Center(
+                              //       child: Text(
+                              //           'Filter people by name, surname, or age'),
+                              //     ),
+                              //     builder: (Int t) => ListTile(
+                              //       title: Text(t.toString()),
+                              //       subtitle: Text(t.toString()),
+                              //       trailing: Text('${t.toString()} yo'),
+                              //     ),
+                              //     filter: (Int t) => ['1', '2'],
+                              //   ),
+                              // );
+                            },
                             controller: null,
                             screenWidth: screenWidth,
                             screenHeight: screenHeight,

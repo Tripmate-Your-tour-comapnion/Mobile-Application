@@ -474,9 +474,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
             SizedBox(
               width: width * 0.85,
               child: CustomElevatedButton(
-                onPressed: () {
-                  return _validator();
-                },
+                onPressed: _validator,
                 text: "Login",
                 buttonStyle: CustomButtonStyles.outlinePrimaryTL5,
                 buttonTextStyle: const TextStyle(

@@ -5,8 +5,6 @@ import 'package:tripmate/helpers/init_dependency.dart';
 
 import '../../../core/app_exports.dart';
 import 'screens/changePasswordScreen/changepasswordscreen.dart';
-import 'screens/forgetPasswordScreen/forgetpasswordscreen.dart';
-import 'screens/onboarding/onboarding_one_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +31,7 @@ class TripMateApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: ChangePasswordScreen(),
+      // home: ChangePasswordScreen(),
       initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.pages,
     );

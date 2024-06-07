@@ -7,7 +7,7 @@ import 'package:tripmate/screens/hotel/controller/hotel_contrller.dart';
 import 'package:tripmate/screens/onboarding/controller/onboarding_two_controller.dart';
 import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
 
-class ConfirmPasswordController extends Controller {
+class ConfirmPasswordController extends GetxController {
   RxBool isTimeEnd = false.obs;
   RxBool isGmailConfirmed = false.obs;
   String email = '';
@@ -46,7 +46,7 @@ class ConfirmPasswordController extends Controller {
       if (response.statusCode == 200) {
         print(response.data[0]['confirmed']);
         isGmailConfirmed.value = response.data[0]['confirmed'];
-        if(isGmailConfirmed.value){
+        if (isGmailConfirmed.value) {
           Get.toNamed(AppRoutes.editProfile);
         }
       } else {
