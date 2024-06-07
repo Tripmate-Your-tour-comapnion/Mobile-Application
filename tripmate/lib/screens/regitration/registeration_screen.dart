@@ -99,12 +99,12 @@ class RegisterWidget extends GetWidget<RegistrationController> {
     final _formKey = GlobalKey<FormState>();
     void _validate() async {
       _formKey.currentState!.validate();
-      ProgressDialogUtils.showProgressDialog();
+      // ProgressDialogUtils.showProgressDialog();
       await controller.singUp(
           fullName.text, email.text, password.text, rePassword.text);
       if (controller.userData['success']) {
         Get.toNamed(AppRoutes.confirmEmailScreen,
-            arguments: controller.userData['email'] as String);
+            arguments: controller.userData['email']);
       }
 
       // ProgressDialogUtils.hideProgressDialog();
@@ -244,7 +244,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
             SizedBox(
               width: width * 0.85,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -259,37 +259,7 @@ class RegisterWidget extends GetWidget<RegistrationController> {
                       ),
                     ],
                   ),
-                  Obx(
-                    () => DropdownButton(
-                      dropdownColor: theme.colorScheme.background,
-                      borderRadius: BorderRadius.circular(10),
-                      value: controller.dropValue.value,
-                      underline: const SizedBox(),
-                      elevation: 0,
-                      hint: Text('Tourist', style: theme.textTheme.bodyMedium),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'tourist',
-                          child: Text('Tourist'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'tourguide',
-                          child: Text('Tourguide'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'shopkeeper',
-                          child: Text('Shopkeeper'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'hotelmanager',
-                          child: Text('Hotel'),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        controller.dropValue.value = value.toString();
-                      },
-                    ),
-                  ),
+                 
                 ],
               ),
             ),
@@ -350,6 +320,7 @@ class LoginWidget extends GetWidget<RegistrationController> {
   final _formkey = GlobalKey<FormState>();
   void _validator() async {
     if (_formkey.currentState != null && _formkey.currentState!.validate()) {
+      ProgressDialogUtils.showProgressDialog();
       await controller.login(userName.text, password.text);
     }
   }
@@ -474,7 +445,13 @@ class LoginWidget extends GetWidget<RegistrationController> {
             SizedBox(
               width: width * 0.85,
               child: CustomElevatedButton(
+<<<<<<< HEAD
+                onPressed: () {
+                   _validator();
+                },
+=======
                 onPressed: _validator,
+>>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
                 text: "Login",
                 buttonStyle: CustomButtonStyles.outlinePrimaryTL5,
                 buttonTextStyle: const TextStyle(

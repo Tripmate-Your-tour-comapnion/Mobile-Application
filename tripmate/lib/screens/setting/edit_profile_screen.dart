@@ -21,11 +21,11 @@ import 'controller/setting_controller.dart';
 class EditProfileScreen extends GetWidget<EditProfileController> {
   EditProfileScreen({super.key});
 
-  final argument = Get.arguments;
+  final argument = Get.arguments ;
 
   @override
   Widget build(BuildContext context) {
-    // print('respose from profile $response');
+    // print(argument);
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       body: SingleChildScrollView(
@@ -35,11 +35,13 @@ class EditProfileScreen extends GetWidget<EditProfileController> {
           child: SafeArea(
             child: Column(
               children: [
+                // if( argument['source']['signup'] == 'signup')
                 SettingProfile(
-                  profileImgPath: argument['profile_image'],
-                  fulName: argument['name'],
-                  email: argument['email'],
-                  id: "",
+                  profileImgPath: Constants.imgPlaceHolder,
+                  fulName: argument['userData']['name'],
+                  email: argument['userData']['email'],
+                  id:  argument['userData']['id'],
+                  source: argument['source'],
                 ),
               ],
             ),
@@ -56,6 +58,7 @@ class SettingProfile extends GetWidget<EditProfileController> {
   final String fulName;
   final String email;
   final String id;
+  final String source;
 
   SettingProfile({
     super.key,
@@ -63,6 +66,7 @@ class SettingProfile extends GetWidget<EditProfileController> {
     required this.fulName,
     required this.email,
     required this.id,
+    required this.source,
   });
 
   bool isLoading = false;
@@ -174,6 +178,12 @@ class SettingProfile extends GetWidget<EditProfileController> {
             children: [
               Stack(
                 children: [
+                  (source == "signup")?
+                  CircleAvatar(
+                            radius: width * 0.15,
+                            backgroundImage: AssetImage(
+                              profileImgPath,
+                            )):
                   Obx(() {
                     return controller.image.value == null
                         ? CircleAvatar(

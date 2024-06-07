@@ -1,9 +1,14 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+import 'package:flutter/widgets.dart';
+=======
 import 'package:search_page/search_page.dart';
+>>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
 
 import 'package:tripmate/core/app_exports.dart';
+import 'package:tripmate/screens/BottomNavigation/controller/bottomnavcontroller.dart';
 import 'package:tripmate/screens/homescreen/Controller/home_controller.dart';
 import 'package:tripmate/screens/hotel/controller/hotel_contrller.dart';
 import 'package:tripmate/widgets/shimmer_home..dart';
@@ -45,19 +50,27 @@ class HomeScreen extends StatelessWidget {
                         top: screenHeight * 0.008),
                     child: Row(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: screenHeight * 0.018),
-                          child: Container(
-                              width: screenWidth * 0.12,
-                              height: screenWidth * 0.12,
-                              decoration: const BoxDecoration(
-                                color: Color.fromRGBO(231, 239, 233, 1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.person_2_outlined,
-                                color: theme.colorScheme.onPrimary,
-                              )),
+                        GestureDetector(
+                          onTap: (){
+                            BottomNavBarController bt = Get.put(BottomNavBarController());
+                            bt.changeTabIndex(3);
+                            bt.pageController.jumpToPage(3);
+                            
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: screenHeight * 0.018),
+                            child: Container(
+                                width: screenWidth * 0.12,
+                                height: screenWidth * 0.12,
+                                decoration: const BoxDecoration(
+                                  color: Color.fromRGBO(231, 239, 233, 1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.person_2_outlined,
+                                  color: theme.colorScheme.onPrimary,
+                                )),
+                          ),
                         ),
                         Gap(screenWidth * 0.01),
                         Column(
@@ -74,13 +87,18 @@ class HomeScreen extends StatelessWidget {
                                   color: theme.colorScheme.onPrimary,
                                   fontSize: screenWidth * 0.033),
                             ),
-                            Text("James",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: theme.colorScheme.onPrimary,
-                                    fontSize: screenWidth * 0.033)),
+                            Obx(
+                              ()=> SizedBox(
+                                width: screenWidth * 0.12,
+                                child: Text(controller.userName.value.split(' ')[0],
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: theme.colorScheme.onPrimary,
+                                        fontSize: screenWidth * 0.0265)),
+                              ),
+                            ),
                           ],
                         ),
                         Padding(

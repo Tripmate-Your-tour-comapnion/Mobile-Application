@@ -50,7 +50,8 @@ class RegistrationController extends GetxController
 // token getter from GetStorage
   Future<String> tokenGetter() async {
     final user = GetStorage();
-    return await user.read('token') ?? "";
+    final token = (await user.read('token').split('=')[1].split(';')[0].trim()) ?? "";
+    return token;
   }
 
   // email confirmation checker
@@ -70,9 +71,14 @@ class RegistrationController extends GetxController
 
       // Handle the response
       if (response.statusCode == 200) {
-        tokenSetter(response.headers.value('set-cookie')!);
+      
 
+<<<<<<< HEAD
+    if (response.data['body']['confirmed'] == true) {
+            tokenSetter(response.headers.value('set-cookie')!);
+=======
         if (response.data['body']['confirmed'] == true) {
+>>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
           Get.toNamed(AppRoutes.bottomNavigation);
         }
       } else {
@@ -141,7 +147,9 @@ class RegistrationController extends GetxController
 
       if (response.statusCode == 200) {
         if (kDebugMode) {
-          print('succes ${response.data['success']}');
+          print('succes ${response.data}');
+           final box = GetStorage();
+          tokenSetter(response.headers.value('set-cookie')!);
         }
 
         userData.value = {

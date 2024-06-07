@@ -19,9 +19,12 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   final BottomNavBarController controller = Get.find<BottomNavBarController>();
   final HomeScreenController homeController = Get.find<HomeScreenController>();
+<<<<<<< HEAD
+=======
   final PurchaseHistoryController purchaseController =
       Get.find<PurchaseHistoryController>();
   final PageController _pageController = PageController();
+>>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
 
   @override
   void initState() {
@@ -33,11 +36,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return GetBuilder<BottomNavBarController>(builder: (_) {
+    return GetBuilder<BottomNavBarController>(builder: (bottomNavBarController) {
       return Scaffold(
         body: SafeArea(
           child: PageView(
-            controller: _pageController,
+            controller: bottomNavBarController.pageController,
             onPageChanged: (index) {
               controller.changeTabIndex(index);
             },
@@ -54,8 +57,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
           unselectedItemColor: theme.colorScheme.primary,
           selectedItemColor: theme.colorScheme.onPrimary,
           onTap: (index) {
-            controller.changeTabIndex(index);
-            _pageController.jumpToPage(index);
+            bottomNavBarController.changeTabIndex(index);
+            
           },
           currentIndex: controller.tabIndex,
           showSelectedLabels: true,
