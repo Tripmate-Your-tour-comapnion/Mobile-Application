@@ -5,6 +5,6 @@ import 'package:tripmate/core/utils/network.dart';
 
 class InitDependency {
   static void init() {
-    Get.put<NetworkController>(NetworkController(), permanent: true);
+    // Get.put<NetworkController>(NetworkController(), permanent: true);
   }
 }

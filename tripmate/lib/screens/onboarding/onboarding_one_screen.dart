@@ -1,11 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:tripmate/core/app_exports.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'package:lottie/lottie.dart';
-import 'package:gap/gap.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import 'controller/onboarding_two_controller.dart';
 
 class OnboardingOneScreen extends StatelessWidget {
@@ -73,7 +71,7 @@ class OnboardingOneScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Gap(size.height * 0.01),
+            Gap(size.height * 0.04),
             Obx(() {
               return controller.currentIndex.value == 2
                   ? CustomElevatedButton(

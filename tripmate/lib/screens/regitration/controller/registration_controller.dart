@@ -73,8 +73,12 @@ class RegistrationController extends GetxController
       if (response.statusCode == 200) {
       
 
+<<<<<<< HEAD
     if (response.data['body']['confirmed'] == true) {
             tokenSetter(response.headers.value('set-cookie')!);
+=======
+        if (response.data['body']['confirmed'] == true) {
+>>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
           Get.toNamed(AppRoutes.bottomNavigation);
         }
       } else {

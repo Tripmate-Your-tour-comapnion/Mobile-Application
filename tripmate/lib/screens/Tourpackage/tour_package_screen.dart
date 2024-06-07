@@ -166,7 +166,7 @@ Widget tourAgentCard(
           Gap(screenWidth * 0.02),
           Align(
             alignment: Alignment.center,
-            child: Container(
+            child: SizedBox(
               height: screenHeight * 0.21,
               width: screenWidth * 0.41,
               child: ClipRRect(
@@ -182,7 +182,7 @@ Widget tourAgentCard(
           Gap(screenWidth * 0.02),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.036),
-            child: Container(
+            child: SizedBox(
               width: screenWidth * 2,
               child: Row(
                 children: [

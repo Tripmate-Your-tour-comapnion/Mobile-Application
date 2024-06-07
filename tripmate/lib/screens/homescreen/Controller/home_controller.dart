@@ -19,7 +19,11 @@ class HomeScreenController extends GetxController {
   RxString userName = "".obs;
 
   @override
+<<<<<<< HEAD
   onInit() async{
+=======
+  onInit() {
+>>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
     super.onInit();
     fetchTopRatedHotels();
    RegistrationController registrationController = Get.put(RegistrationController());
@@ -53,18 +57,16 @@ class HomeScreenController extends GetxController {
     } finally {}
   }
 
-// Fetching to
+  // Fetching top-rated hotels
   Future<void> fetchTopRatedHotels() async {
-    // isLoading.value = true;
-
-    final headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'token=${dotenv.env['TOKEN']}',
-    };
-
-    String url = '${dotenv.env['BACKEND_URL']}/rooms/get-all/';
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Cookie': 'token=${dotenv.env['TOKEN']}',
+      };
+
+      String url = '${dotenv.env['BACKEND_URL']}/rooms/get-top-rated-hotels/';
+
       final response = await dio.get(
         url,
         options: Options(
@@ -72,39 +74,18 @@ class HomeScreenController extends GetxController {
           headers: headers,
         ),
       );
-
-      final hotels = response.data['message'] as List;
-      List<HotelModel> temporaryList = [];
-
-      for (var element in hotels) {
-        if (element['room_rate']['value'] >= 4) {
-          try {
-            final topratedResponse = await dio.get(
-              "${dotenv.env['BACKEND_URL']}/user/get-single-provider/${element['owner']}",
-              options: Options(
-                method: 'GET',
-                headers: headers,
-              ),
-            );
-
-            var hotel = topratedResponse.data;
-            temporaryList.add(HotelModel.fromJson(hotel));
-          } catch (e) {
-            print("Error fetching hotel details: $e");
-          }
-        }
-      }
-
-      topRatedHotels.clear();
-      topRatedHotels.addAll(temporaryList);
-      print(topRatedHotels);
+      topRatedHotels.value = (response.data as List)
+          .map((json) => HotelModel.fromJson(json))
+          .toList();
     } catch (e) {
       print("Error fetching top rated hotels: $e");
     } finally {
-      // isLoading.value = false;
+      isLoading = false; // Hide loading widget
+      update(); // Update UI to hide loading
     }
   }
 
+<<<<<<< HEAD
   Future<void> getUserByToken(String token)async{
   String baseUrl = dotenv.get('BASEURL');
   final url = "$baseUrl/user/get-user-with-token";
@@ -152,4 +133,7 @@ class HomeScreenController extends GetxController {
 
 
   }
+=======
+  Future<void> searchForEverything() async {}
+>>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
 }

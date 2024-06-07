@@ -48,8 +48,6 @@ class EditProfileController extends GetxController {
     d.Dio _dio = d.Dio();
 
     final formData = d.FormData.fromMap({
-      'passport_id':
-          passportIdController.text.trim(), // Replace with actual passport ID
       'phone_number':
           phoneNumberController.text.trim(), // Ensure this is a string
       'profile_image': await d.MultipartFile.fromFile(

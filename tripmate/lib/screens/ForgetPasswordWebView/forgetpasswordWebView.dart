@@ -38,34 +38,36 @@ class _ForgotPasswordWebViewState extends State<ForgotPasswordWebView> {
             },
           ),
         ),
-        body: WebViewWidget(
-            controller: WebViewController()
-              ..setJavaScriptMode(JavaScriptMode.unrestricted)
-              ..setBackgroundColor(const Color(0x00000000))
-              ..loadRequest(Uri.parse(widget.resetUrl))
-              ..setNavigationDelegate(NavigationDelegate(
-                onProgress: (int progress) {
-                  // Update loading bar.
-                },
-                onUrlChange: (change) {
-                  if (change.url ==
-                      'https://tourism-management-front.vercel.app/login') {
-                    Get.back();
-                  }
-                },
-                onPageStarted: (url) {
-                  if (url ==
-                      'https://tourism-management-front.vercel.app/login') {
-                    Get.back();
-                  }
-                },
-                onNavigationRequest: (NavigationRequest request) {
-                  if (request.url.startsWith(
-                      'https://tourism-management-front.vercel.app/login')) {
-                    Get.back();
-                  }
-                  return NavigationDecision.navigate;
-                },
-              ))));
+        body: widget.resetUrl != null
+            ? WebViewWidget(
+                controller: WebViewController()
+                  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                  ..setBackgroundColor(const Color(0x00000000))
+                  ..loadRequest(Uri.parse(widget.resetUrl))
+                  ..setNavigationDelegate(NavigationDelegate(
+                    onProgress: (int progress) {
+                      // Update loading bar.
+                    },
+                    onUrlChange: (change) {
+                      if (change.url ==
+                          'https://tourism-management-front.vercel.app/login') {
+                        Get.back();
+                      }
+                    },
+                    onPageStarted: (url) {
+                      if (url ==
+                          'https://tourism-management-front.vercel.app/login') {
+                        Get.back();
+                      }
+                    },
+                    onNavigationRequest: (NavigationRequest request) {
+                      if (request.url.startsWith(
+                          'https://tourism-management-front.vercel.app/login')) {
+                        Get.back();
+                      }
+                      return NavigationDecision.navigate;
+                    },
+                  )))
+            : CircularProgressIndicator());
   }
 }
