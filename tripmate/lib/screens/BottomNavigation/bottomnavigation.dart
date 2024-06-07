@@ -65,7 +65,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           items: [
             _bottomNavigationBar(size, "Home", Icons.home),
             _bottomNavigationBar(size, "Blog", Icons.newspaper),
-            _bottomNavigationBar(size, "Services", LineIcons.servicestack),
+            _bottomNavigationBar(size, "History", LineIcons.history),
             _bottomNavigationBar(size, "Setting", Icons.settings),
           ],
         ),
