@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/agent_detail_screen/model/tour_agent_model.dart';
+import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
 
 import '../../hotel/model/hotel_model.dart';
 import '../model/tourpackage_model.dart';
 
 class TourPackageController extends GetxController {
   RxList<TourpackageModel> tours = <TourpackageModel>[].obs;
+  RegistrationController rc = RegistrationController();
 
   TextEditingController searchController = TextEditingController();
   RxList<TourpackageModel> filteredTours = <TourpackageModel>[].obs;
@@ -43,8 +45,7 @@ class TourPackageController extends GetxController {
     String url = '$baseUrl/tours/get-all';
 
     Dio dio = Dio();
-    String token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTMzNjRhNmY4OTQ1MjFhNTkyYmEzOSIsInJvbGUiOiJ0b3VyaXN0Iiwic3RhdHVzIjoiYmFubmVkIiwiaWF0IjoxNzE2OTc4NDk4fQ.o4uNWAIGhwpM2pr_aIw13aBOxr1cwFtwUP3wqwW1MLw';
+        String token =await rc.tokenGetter();
     final headers = {
       'Content-Type': 'application/json',
       'Cookie': 'token=$token',
@@ -74,7 +75,7 @@ class TourPackageController extends GetxController {
       }
     }
   }
-
+  
   TourpackageModel findTourById(String id) {
     return tours.firstWhere((tour) => tour.iId == id);
   }
@@ -96,8 +97,9 @@ class TourPackageController extends GetxController {
     Map<String, dynamic> data = {
       "quantity": qnt,
     };
-    String token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTMzNjRhNmY4OTQ1MjFhNTkyYmEzOSIsInJvbGUiOiJ0b3VyaXN0Iiwic3RhdHVzIjoiYmFubmVkIiwiaWF0IjoxNzE2OTc4NDk4fQ.o4uNWAIGhwpM2pr_aIw13aBOxr1cwFtwUP3wqwW1MLw';
+
+        String token =await rc.tokenGetter();
+
     final headers = {
       'Content-Type': 'application/json',
       'Cookie': 'token=$token',

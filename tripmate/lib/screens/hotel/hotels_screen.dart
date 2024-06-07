@@ -21,24 +21,49 @@ class HotelsScreen extends GetWidget<HotelController> {
       backgroundColor: theme.colorScheme.background,
       appBar: PreferredSize(
           preferredSize: Size(width, height * 0.15),
-          child: Column(
-            children: [
-              SizedBox(
-                height: height * 0.05,
-              ),
-              FutureBuilder(
-                future: controller.fetchHotels(''),
-                builder: (context, snapshot) =>
-                    snapshot.connectionState == ConnectionState.waiting
-                        ? searchShimmer(context)
-                        : CustomSearchWidget(
-                            hint: "Search",
-                            contentPadding:
-                                EdgeInsets.symmetric(vertical: height * 0.02),
-                            controller: controller.searchController,
-                          ),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: height * 0.05,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                     InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.onPrimary.withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: theme.colorScheme.background,
+                      ),
+                    ),
+                  ),
+                    FutureBuilder(
+                      future: controller.fetchHotels(''),
+                      builder: (context, snapshot) =>
+                          snapshot.connectionState == ConnectionState.waiting
+                              ? searchShimmer(context)
+                              : CustomSearchWidget(
+                                
+                                  hint: "Search",
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: height * 0.02),
+                                  controller: controller.searchController,
+                                ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           )),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -248,11 +273,14 @@ class CustomSearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       padding: EdgeInsets.symmetric(
           vertical: height * 0.02, horizontal: height * 0.02),
       child: CustomTextFormField(
+        width: width * 0.65,
+        
         controller: controller,
         textInputAction: TextInputAction.search,
         prefix: Padding(

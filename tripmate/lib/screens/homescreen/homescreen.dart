@@ -1,11 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:flutter/widgets.dart';
-=======
-import 'package:search_page/search_page.dart';
->>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
 
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/BottomNavigation/controller/bottomnavcontroller.dart';

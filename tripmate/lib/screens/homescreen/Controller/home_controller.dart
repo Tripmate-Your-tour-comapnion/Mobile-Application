@@ -19,16 +19,14 @@ class HomeScreenController extends GetxController {
   RxString userName = "".obs;
 
   @override
-<<<<<<< HEAD
   onInit() async{
-=======
-  onInit() {
->>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
+
+  
     super.onInit();
     fetchTopRatedHotels();
    RegistrationController registrationController = Get.put(RegistrationController());
    
-   await getUserByToken(await registrationController.tokenGetter());
+   await getUserByToken( await registrationController.tokenGetter());
   }
 
   static final url = "${dotenv.env['BACKEND_URL']}/destinations/get-all";
@@ -85,7 +83,7 @@ class HomeScreenController extends GetxController {
     }
   }
 
-<<<<<<< HEAD
+
   Future<void> getUserByToken(String token)async{
   String baseUrl = dotenv.get('BASEURL');
   final url = "$baseUrl/user/get-user-with-token";
@@ -133,7 +131,5 @@ class HomeScreenController extends GetxController {
 
 
   }
-=======
   Future<void> searchForEverything() async {}
->>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
 }

@@ -10,9 +10,11 @@ import 'package:tripmate/widgets/custom_elevated_button.dart';
 
 import '../termsAndPolicy/terms_and_policy.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends GetWidget<SettingController> {
+
+  SettingController sc = Get.put(SettingController());
+  
   SettingScreen({super.key});
-  final SettingController controller = Get.put(SettingController());
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -25,22 +27,16 @@ class SettingScreen extends StatelessWidget {
             child: SafeArea(
               child: Column(
                 children: [
-                  FutureBuilder(
-                      future: controller.fetchUser(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else {
-                          return SettingProfile(
-                            profileImgPath: controller.imageUrl,
-                            fulName: controller.name,
-                            email: controller.email,
-                            passportNo: controller.passpot_no,
-                            phoneNo: controller.phone_number,
-                          );
-                        }
-                      }),
+                   Obx(
+                         ()=> SettingProfile(
+                              profileImgPath: controller.imageUrl.value,
+                              fulName: controller.name.value,
+                              email: controller.email.value,
+                              passportNo: controller.passpot_no.value,
+                              phoneNo: controller.phone_number.value,
+                            ),
+                          ),
+                     
                   SizedBox(
                       width: width,
                       child: Column(
@@ -155,6 +151,7 @@ class SettingProfile extends GetWidget<SettingController> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    print(email);
     return SizedBox(
       width: width,
       height: height * 0.5,
