@@ -5,8 +5,10 @@ import 'package:tripmate/screens/BlogScreen/blog_list.dart';
 import 'package:tripmate/screens/homescreen/homescreen.dart';
 import 'package:tripmate/screens/BottomNavigation/controller/bottomnavcontroller.dart';
 import 'package:tripmate/screens/homescreen/Controller/home_controller.dart';
+import 'package:tripmate/screens/myPurchaseScreen/controller/purchase_history_controller.dart';
 
 import '../../theme/theme_helper.dart';
+import '../myPurchaseScreen/my_purchases.dart';
 import '../setting/setting_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -17,6 +19,8 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   final BottomNavBarController controller = Get.find<BottomNavBarController>();
   final HomeScreenController homeController = Get.find<HomeScreenController>();
+  final PurchaseHistoryController purchaseController =
+      Get.find<PurchaseHistoryController>();
   final PageController _pageController = PageController();
 
   @override
@@ -40,7 +44,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             children: [
               HomeScreen(),
               BlogScreen(),
-              BlogScreen(),
+              MyPurchaseScreen(),
               SettingScreen()
               // Add other screens here
             ],

@@ -104,7 +104,11 @@ class SettingScreen extends StatelessWidget {
                             height: height * 0.01,
                           ),
                           SettingsListItemWidget(
-                            onPress: () {},
+                            onPress: () async {
+                              final user = GetStorage();
+                              await user.remove('token');
+                              Get.offAndToNamed(AppRoutes.registerationScreen);
+                            },
                             title: "logout",
                             prefixIconPath: Constants.logoutIcon,
                             sufixIconPath: Constants.arrowIcon,

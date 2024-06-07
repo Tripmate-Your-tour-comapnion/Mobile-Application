@@ -10,11 +10,9 @@ class ProductListController extends GetxController {
 
   Future<void> fetchProduct(String shopId) async {
     try {
-      String token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTMzNjRhNmY4OTQ1MjFhNTkyYmEzOSIsInJvbGUiOiJ0b3VyaXN0Iiwic3RhdHVzIjoiYmFubmVkIiwiaWF0IjoxNzE2OTc4NDk4fQ.o4uNWAIGhwpM2pr_aIw13aBOxr1cwFtwUP3wqwW1MLw';
       final headers = {
         'Content-Type': 'application/json',
-        'Cookie': 'token=$token',
+        'Cookie': 'token=${dotenv.env['TOKEN']}',
       };
 
       final response = await dio.get(

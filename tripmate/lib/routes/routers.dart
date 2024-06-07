@@ -25,7 +25,7 @@ import 'package:tripmate/screens/setting/edit_profile_screen.dart';
 import 'package:tripmate/screens/splash/Binding/splashScreenBinding.dart';
 
 import 'package:tripmate/screens/AddProduct/Binding/add_product_binding.dart';
-import 'package:tripmate/screens/AddProduct/addProduct.dart';
+
 import 'package:tripmate/screens/AddTourPackage/Binding/add_tour_binding.dart';
 import 'package:tripmate/screens/AddTourPackage/add_tour_package.dart';
 import 'package:tripmate/screens/BlogScreen/blog_detail.dart';
@@ -44,6 +44,7 @@ import 'package:tripmate/screens/packageDetail/package_detail_screen.dart';
 import 'package:tripmate/screens/productDetail/Binding/product_detail_binding.dart';
 import 'package:tripmate/screens/productDetail/product_detail.dart';
 
+import '../screens/AddProduct/addproduct.dart';
 import '../screens/BlogScreen/Binding/blogdetail_binding.dart';
 import '../screens/homescreen/Binding/home_bindings.dart';
 import '../screens/hotel/controller/room_reservation_controller.dart';
