@@ -150,7 +150,7 @@ class AppRoutes {
     ),
     GetPage(
       name: settingScreen,
-      page: () => const SettingScreen(),
+      page: () => SettingScreen(),
       bindings: [SettingBinding()],
     ),
     GetPage(

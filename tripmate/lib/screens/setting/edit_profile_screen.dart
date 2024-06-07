@@ -21,7 +21,7 @@ import 'controller/setting_controller.dart';
 class EditProfileScreen extends GetWidget<EditProfileController> {
   EditProfileScreen({super.key});
 
-  // final response = Get.arguments['response'];
+  final argument = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +36,9 @@ class EditProfileScreen extends GetWidget<EditProfileController> {
             child: Column(
               children: [
                 SettingProfile(
-                  profileImgPath: controller.imgPath.value,
-                  fulName: "Brikti Teklu",
-                  email: "brktiteklu@gmail.com",
+                  profileImgPath: argument['profile_image'],
+                  fulName: argument['name'],
+                  email: argument['email'],
                   id: "",
                 ),
               ],
@@ -64,8 +64,6 @@ class SettingProfile extends GetWidget<EditProfileController> {
     required this.email,
     required this.id,
   });
-  TextEditingController passportIdController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
 
   bool isLoading = false;
 
@@ -180,7 +178,7 @@ class SettingProfile extends GetWidget<EditProfileController> {
                     return controller.image.value == null
                         ? CircleAvatar(
                             radius: width * 0.15,
-                            backgroundImage: AssetImage(
+                            backgroundImage: NetworkImage(
                               profileImgPath,
                             ))
                         : CircleAvatar(
@@ -243,7 +241,7 @@ class SettingProfile extends GetWidget<EditProfileController> {
                   width: width * 0.8,
                   height: height * 0.085,
                   child: TextFormField(
-                    controller: passportIdController,
+                    controller: controller.passportIdController,
                     cursorColor: theme.colorScheme.onPrimary,
                     decoration: InputDecoration(
                       // erro,
@@ -284,7 +282,7 @@ class SettingProfile extends GetWidget<EditProfileController> {
                   width: width * 0.8,
                   height: height * 0.05,
                   child: IntlPhoneField(
-                    controller: phoneNumberController,
+                    controller: controller.phoneNumberController,
                     disableAutoFillHints: true,
                     disableLengthCheck: true,
                     pickerDialogStyle: PickerDialogStyle(

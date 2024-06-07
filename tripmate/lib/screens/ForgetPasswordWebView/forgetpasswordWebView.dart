@@ -47,8 +47,21 @@ class _ForgotPasswordWebViewState extends State<ForgotPasswordWebView> {
                 onProgress: (int progress) {
                   // Update loading bar.
                 },
+                onUrlChange: (change) {
+                  if (change.url ==
+                      'https://tourism-management-front.vercel.app/login') {
+                    Get.back();
+                  }
+                },
+                onPageStarted: (url) {
+                  if (url ==
+                      'https://tourism-management-front.vercel.app/login') {
+                    Get.back();
+                  }
+                },
                 onNavigationRequest: (NavigationRequest request) {
-                  if (request.url.startsWith('http://localhost:5173/thanks')) {
+                  if (request.url.startsWith(
+                      'https://tourism-management-front.vercel.app/login')) {
                     Get.back();
                   }
                   return NavigationDecision.navigate;

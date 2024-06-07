@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,9 +8,11 @@ import 'package:tripmate/data/constants.dart';
 import 'package:tripmate/screens/setting/controller/setting_controller.dart';
 import 'package:tripmate/widgets/custom_elevated_button.dart';
 
-class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+import '../termsAndPolicy/terms_and_policy.dart';
 
+class SettingScreen extends StatelessWidget {
+  SettingScreen({super.key});
+  final SettingController controller = Get.put(SettingController());
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -22,13 +25,22 @@ class SettingScreen extends StatelessWidget {
             child: SafeArea(
               child: Column(
                 children: [
-                  SettingProfile(
-                    profileImgPath: Constants.profileImg,
-                    fulName: "Brikti Teklu",
-                    email: "brktiteklu@gmail.com",
-                    passportNo: "908765",
-                    phoneNo: "+251905221804",
-                  ),
+                  FutureBuilder(
+                      future: controller.fetchUser(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else {
+                          return SettingProfile(
+                            profileImgPath: controller.imageUrl,
+                            fulName: controller.name,
+                            email: controller.email,
+                            passportNo: controller.passpot_no,
+                            phoneNo: controller.phone_number,
+                          );
+                        }
+                      }),
                   SizedBox(
                       width: width,
                       child: Column(
@@ -62,7 +74,16 @@ class SettingScreen extends StatelessWidget {
                             height: height * 0.01,
                           ),
                           SettingsListItemWidget(
-                            onPress: () {},
+                            onPress: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Policy(
+                                      mdFile: 'privacy_policy.md',
+                                      radius: 8,
+                                    );
+                                  });
+                            },
                             title: "Terms and Policy",
                             prefixIconPath: Constants.handshakeIcon,
                             sufixIconPath: Constants.arrowIcon,
@@ -70,15 +91,28 @@ class SettingScreen extends StatelessWidget {
                           SizedBox(
                             height: height * 0.01,
                           ),
+
                           SettingsListItemWidget(
-                            onPress: () {},
-                            title: "Help",
-                            prefixIconPath: Constants.infoIcon,
+                            onPress: () {
+                              showAboutDialog(context: context);
+                            },
+                            title: "About us",
+                            prefixIconPath: Constants.programmingIcon,
                             sufixIconPath: Constants.arrowIcon,
                           ),
                           SizedBox(
                             height: height * 0.01,
                           ),
+                          SettingsListItemWidget(
+                            onPress: () {},
+                            title: "logout",
+                            prefixIconPath: Constants.logoutIcon,
+                            sufixIconPath: Constants.arrowIcon,
+                          ),
+                          SizedBox(
+                            height: height * 0.01,
+                          ),
+
                           // SettingsListItemWidget(
                           //   onPress: () {},
                           //   title: "FAQ",
@@ -87,12 +121,6 @@ class SettingScreen extends StatelessWidget {
                           // ),
                           SizedBox(
                             height: height * 0.01,
-                          ),
-                          SettingsListItemWidget(
-                            onPress: () {},
-                            title: "Meet the developers",
-                            prefixIconPath: Constants.programmingIcon,
-                            sufixIconPath: Constants.arrowIcon,
                           ),
                         ],
                       )),
@@ -136,7 +164,7 @@ class SettingProfile extends GetWidget<SettingController> {
             children: [
               CircleAvatar(
                 radius: width * 0.15,
-                backgroundImage: AssetImage(
+                backgroundImage: NetworkImage(
                   profileImgPath,
                 ),
               ),
@@ -197,7 +225,11 @@ class SettingProfile extends GetWidget<SettingController> {
                 height: height * 0.04,
                 child: CustomElevatedButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.editProfile);
+                    Get.toNamed(AppRoutes.editProfile, arguments: {
+                      'profile_image': controller.imageUrl,
+                      'name': controller.name,
+                      'email': email
+                    });
                   },
                   text: "Edit profile",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL10,
@@ -251,14 +283,20 @@ class SettingsListItemWidget extends StatelessWidget {
                   ),
                   Text(
                     title,
-                    style: theme.textTheme.bodyLarge,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: title == "logout"
+                            ? Colors.red
+                            : theme.colorScheme.onPrimary),
                   ),
                 ],
               ),
-              SvgPicture.asset(
-                sufixIconPath,
-                height: 20,
-              ),
+              SvgPicture.asset(sufixIconPath,
+                  height: 20,
+                  // ignore: deprecated_member_use
+                  color: title == "logout"
+                      ? Colors.red
+                      : theme.colorScheme.onPrimary),
             ],
           ),
           SizedBox(

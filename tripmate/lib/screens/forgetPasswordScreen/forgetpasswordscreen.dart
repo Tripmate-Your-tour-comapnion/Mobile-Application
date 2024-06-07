@@ -4,9 +4,6 @@ import 'package:tripmate/screens/ForgetPasswordWebView/forgetpasswordWebView.dar
 import 'package:tripmate/screens/forgetPasswordScreen/controller/forgetpasswordcontroller.dart';
 import 'package:tripmate/widgets/custom_elevated_button.dart';
 
-import '../../theme/custom_button_style.dart';
-import '../../theme/custom_text_style.dart';
-
 class ForgotPasswordScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -78,21 +75,24 @@ class ForgotPasswordScreen extends StatelessWidget {
                 buttonTextStyle: CustomTextStyles.titleLargeBold,
                 alignment: Alignment.center,
                 onPressed: () async {
-                  Get.dialog(
-                    const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    barrierDismissible: false,
-                  );
+                  if (emailController.text.isNotEmpty) {
+                    Get.dialog(
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      barrierDismissible: false,
+                    );
 
-                  try {
-                    await controller.resetPassword(emailController.text.trim());
-                    Get.back();
-                    Get.to(
-                        ForgotPasswordWebView(resetUrl: controller.resetUrl));
-                  } catch (error) {
-                    print("Error Generating Link: $error");
-                    Get.back();
+                    try {
+                      await controller
+                          .resetPassword(emailController.text.trim());
+                      Get.back();
+                      Get.to(
+                          ForgotPasswordWebView(resetUrl: controller.resetUrl));
+                    } catch (error) {
+                      print("Error Generating Link: $error");
+                      Get.back();
+                    }
                   }
                 },
               )

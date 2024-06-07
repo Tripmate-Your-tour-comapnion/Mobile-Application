@@ -24,4 +24,5 @@ class Constants {
   static String profileImg = 'assets/images/profile.jpg';
   static String hotelImg = 'assets/images/hotel_place_holder.png';
   static String imgPlaceHolder = 'assets/images/image_place_holder.png';
+  static const logoutIcon = 'assets/icons/logout.svg';
 }

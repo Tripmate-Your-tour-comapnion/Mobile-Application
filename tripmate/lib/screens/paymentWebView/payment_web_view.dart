@@ -47,6 +47,7 @@ class _PaymentViewScreenState extends State<PaymentViewScreen> {
                 onProgress: (int progress) {
                   // Update loading bar.
                 },
+                onPageFinished: (url) {},
                 onNavigationRequest: (NavigationRequest request) {
                   if (request.url.startsWith('http://localhost:5173/thanks')) {
                     Get.back();
