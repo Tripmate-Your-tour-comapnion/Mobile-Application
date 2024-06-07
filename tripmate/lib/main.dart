@@ -33,7 +33,7 @@ class TripMateApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: ChangePasswordScreen(),
+     
       initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.pages,
     );

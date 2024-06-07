@@ -3,17 +3,15 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tripmate/core/app_exports.dart';
-import 'package:tripmate/screens/hotel/controller/hotel_contrller.dart';
-import 'package:tripmate/screens/onboarding/controller/onboarding_two_controller.dart';
-import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
 
-class ConfirmPasswordController extends Controller {
+class ConfirmPasswordController extends GetxController {
   RxBool isTimeEnd = false.obs;
   RxBool isGmailConfirmed = false.obs;
   String email = '';
   Timer? _timer;
+  RxString sourceData = ''.obs;
 
-  ConfirmPasswordController(this.email);
+  ConfirmPasswordController({required this.email});
   @override
   void onInit() async {
     _startTimer();
@@ -28,7 +26,7 @@ class ConfirmPasswordController extends Controller {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       isEmailConfirmed(email);
     });
   }
@@ -44,15 +42,40 @@ class ConfirmPasswordController extends Controller {
       final response = await dio.get(url, data: data);
 
       if (response.statusCode == 200) {
-        print(response.data[0]['confirmed']);
+        print(response.data);
         isGmailConfirmed.value = response.data[0]['confirmed'];
-        if(isGmailConfirmed.value){
-          Get.toNamed(AppRoutes.editProfile);
+        if (isGmailConfirmed.value) {
+          Get.offAllNamed(AppRoutes.editProfile, arguments: {
+            'userData': {
+              'email': response.data[0]['email'],
+              'name': response.data[0]['full_name'],
+              'id': response.data[0]['_id']
+            },
+            "source": "signup",
+          });
         }
       } else {
         if (kDebugMode) {
           print('Failed to load hotels: ${response.statusCode}');
         }
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> resendEmail(String email) async {
+    Dio dio = Dio();
+    final baseUrl = dotenv.env['BASEURL'];
+    final url = "$baseUrl/user/resend-email";
+    final emailData = {
+      'emails': email,
+    };
+    try {
+      final response = await dio.post(url, data: emailData);
+
+      if (response.statusCode == 200) {
+        print(response.data);
       }
     } catch (e) {
       print('Error: $e');
