@@ -3,12 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tripmate/core/app_exports.dart';
+import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
 
 import '../model/room_model.dart';
 
 class RoomController extends GetxController {
   RxList<RoomModel> rooms = <RoomModel>[].obs;
   RxString hotelId = ''.obs;
+  RegistrationController rc = RegistrationController();
 
   @override
   void onInit() async {
@@ -125,8 +127,8 @@ class RoomController extends GetxController {
     Map<String, dynamic> rateData = {
       'rate': rate,
     };
-    String token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTMzNjRhNmY4OTQ1MjFhNTkyYmEzOSIsInJvbGUiOiJ0b3VyaXN0Iiwic3RhdHVzIjoiYmFubmVkIiwiaWF0IjoxNzE2OTc4NDk4fQ.o4uNWAIGhwpM2pr_aIw13aBOxr1cwFtwUP3wqwW1MLw';
+     String token =await rc.tokenGetter();
+
     final headers = {
       'Content-Type': 'application/json',
       'Cookie': 'token=$token',

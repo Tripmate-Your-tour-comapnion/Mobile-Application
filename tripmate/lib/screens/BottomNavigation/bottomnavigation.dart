@@ -19,12 +19,9 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   final BottomNavBarController controller = Get.find<BottomNavBarController>();
   final HomeScreenController homeController = Get.find<HomeScreenController>();
-<<<<<<< HEAD
-=======
+
   final PurchaseHistoryController purchaseController =
       Get.find<PurchaseHistoryController>();
-  final PageController _pageController = PageController();
->>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f
 
   @override
   void initState() {

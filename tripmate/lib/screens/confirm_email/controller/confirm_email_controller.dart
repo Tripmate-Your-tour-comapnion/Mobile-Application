@@ -45,7 +45,6 @@ class ConfirmPasswordController extends GetxController {
         print(response.data);
         isGmailConfirmed.value = response.data[0]['confirmed'];
         if (isGmailConfirmed.value) {
-<<<<<<< HEAD:tripmate/lib/screens/confirm_email/controller/confirm_email_controller.dart
           Get.offAllNamed(AppRoutes.editProfile, arguments: {
             'userData': {
               'email': response.data[0]['email'],
@@ -54,9 +53,8 @@ class ConfirmPasswordController extends GetxController {
             },
             "source": "signup",
           });
-=======
+
           Get.toNamed(AppRoutes.editProfile);
->>>>>>> a4962b977dd0b5ed7bef7490f2bb2d2ed414767f:tripmate/lib/screens/confirm_email/controller/confirm_password_controller.dart
         }
       } else {
         if (kDebugMode) {

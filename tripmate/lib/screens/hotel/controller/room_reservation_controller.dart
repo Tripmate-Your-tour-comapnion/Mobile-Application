@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tripmate/core/app_exports.dart';
 import 'package:tripmate/screens/hotel/model/room_reservation_model.dart';
+import 'package:tripmate/screens/regitration/controller/registration_controller.dart';
 
 class RoomReservationController extends GetxController {
   List<RoomReservationModel> roomReservations = <RoomReservationModel>[].obs;
+  RegistrationController rc = RegistrationController();
   RxString paymentUrl = ''.obs;
 
   Future reserveRoom(String id, String checkin, String checkout, int quantitiy,
@@ -19,8 +21,8 @@ class RoomReservationController extends GetxController {
       'to': checkout,
       'days': days,
     };
-    String token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTMzNjRhNmY4OTQ1MjFhNTkyYmEzOSIsInJvbGUiOiJ0b3VyaXN0Iiwic3RhdHVzIjoiYmFubmVkIiwiaWF0IjoxNzE2OTc4NDk4fQ.o4uNWAIGhwpM2pr_aIw13aBOxr1cwFtwUP3wqwW1MLw';
+    String token =await rc.tokenGetter();
+        
     final headers = {
       'Content-Type': 'application/json',
       'Cookie': 'token=$token',
