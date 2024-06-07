@@ -49,7 +49,8 @@ class _PaymentViewScreenState extends State<PaymentViewScreen> {
                 },
                 onPageFinished: (url) {},
                 onNavigationRequest: (NavigationRequest request) {
-                  if (request.url.startsWith('http://localhost:5173/thanks')) {
+                  if (request.url.startsWith(
+                      'https://tourism-management-front.vercel.app/thanks')) {
                     Get.back();
                   }
                   return NavigationDecision.navigate;

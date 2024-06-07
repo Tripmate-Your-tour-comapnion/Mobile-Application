@@ -11,7 +11,9 @@ class MyPurchaseScreen extends StatelessWidget {
   MyPurchaseScreen({super.key});
 
   final TextEditingController articleSearchController = TextEditingController();
-  PurchaseHistoryController controller = PurchaseHistoryController();
+  // PurchaseHistoryController controller = PurchaseHistoryController();
+  final PurchaseHistoryController controller =
+      Get.put(PurchaseHistoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +52,16 @@ class MyPurchaseScreen extends StatelessWidget {
                 TabBar(indicatorColor: theme.colorScheme.onPrimary, tabs: [
                   Tab(
                     child: PlaceTitle(
+                        placeName: "Reservation",
+                        screenWidth: screenWidth / 1.2),
+                  ),
+                  Tab(
+                    child: PlaceTitle(
                         placeName: "Orders", screenWidth: screenWidth / 1.2),
                   ),
                   Tab(
                     child: PlaceTitle(
                         placeName: "Subscription",
-                        screenWidth: screenWidth / 1.2),
-                  ),
-                  Tab(
-                    child: PlaceTitle(
-                        placeName: "Reservation",
                         screenWidth: screenWidth / 1.2),
                   )
                 ]),
@@ -79,22 +81,55 @@ class MyPurchaseScreen extends StatelessWidget {
                             final resrvation =
                                 controller.reservationList[index];
                             return HistoryCard(
+                                roomName: resrvation.room.roomName,
                                 name: resrvation.hotel.fullName,
                                 total: (resrvation.room.roomPrice *
                                     resrvation.room.roomAmount),
                                 price: resrvation.room.roomPrice,
-                                availableProduct: 0,
+                                availableProduct: resrvation.room.roomAmount,
                                 imageUrl: resrvation.room.roomImage[0],
                                 description: resrvation.room.roomDescription);
                           },
                         );
                       }),
-                      ListView(
-                        children: [],
-                      ),
-                      ListView(
-                        children: [],
-                      )
+                      Obx(() {
+                        return ListView.builder(
+                          itemCount: controller.reservationList.length,
+                          itemBuilder: (context, index) {
+                            final purchase = controller.purchaseList[index];
+                            return HistoryCard(
+                                roomName: purchase.product.productName,
+                                name: purchase.shop.fullName,
+                                total: (purchase.product.productPrice *
+                                    purchase.product.productQuantity),
+                                price: purchase.product.productPrice,
+                                availableProduct:
+                                    purchase.product.productQuantity,
+                                imageUrl: purchase.product.productImages[0],
+                                description:
+                                    purchase.product.productDescription);
+                          },
+                        );
+                      }),
+                      Obx(() {
+                        return ListView.builder(
+                          itemCount: controller.subscriptionList.length,
+                          itemBuilder: (context, index) {
+                            final subscribe =
+                                controller.subscriptionList[index];
+                            return HistoryCard(
+                                roomName: subscribe.package.packageName,
+                                name: subscribe.agency.fullName,
+                                total: (subscribe.package.packagePrice *
+                                    subscribe.package.spaceLeft),
+                                price: subscribe.package.packagePrice,
+                                availableProduct: subscribe.package.spaceLeft,
+                                imageUrl: subscribe.package.images[0],
+                                description:
+                                    subscribe.package.packageDescription);
+                          },
+                        );
+                      }),
                     ]),
                   ),
                 ),

@@ -16,6 +16,7 @@ class HistoryCard extends StatelessWidget {
   final num availableProduct;
   final String imageUrl;
   final String description;
+  final String roomName;
 
   const HistoryCard({
     super.key,
@@ -25,6 +26,7 @@ class HistoryCard extends StatelessWidget {
     required this.availableProduct,
     required this.imageUrl,
     required this.description,
+    required this.roomName,
   });
 
   @override
@@ -46,8 +48,9 @@ class HistoryCard extends StatelessWidget {
         ),
         child: Row(
           children: [
+            Gap(5),
             SizedBox(
-              width: width * 0.37,
+              width: width * 0.34,
               height: height * 0.136,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -61,65 +64,71 @@ class HistoryCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: width * 0.02,
+              width: width * 0.03,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            width: width * 0.26,
+            Padding(
+              padding: const EdgeInsets.only(top: 13.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                              width: width * 0.26,
+                              child: PlaceTitle(
+                                  placeName: name, screenWidth: width / 1.3)),
+                          Gap(height * 0.004),
+                          Text.rich(TextSpan(
+                              text: " $roomName",
+                              style: TextStyle(
+                                  fontSize: width * 0.04,
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.onPrimary),
+                              children: [])),
+                          Gap(height * 0.004),
+                          SizedBox(
+                            width: width * 0.4,
                             child: PlaceTitle(
-                                placeName: name, screenWidth: width)),
-                        Gap(height * 0.004),
-                        PlaceLocation(
-                          icondata: LineIcons.productHunt,
-                          screenWidth: width,
-                          loctaion: "$total products",
-                        )
-                      ],
-                    ),
-                    Text.rich(TextSpan(
-                        text: "$price USD",
-                        style: TextStyle(
-                            fontSize: 14.5,
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onPrimary),
-                        children: [])),
-                  ],
-                ),
-                Container(
-                  width: width * 0.5,
-                  child: Text(
-                    description,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: width * 0.026,
-                      fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.onPrimary.withOpacity(0.9),
-                    ),
+                                placeName:
+                                    "total price:$total \$ for $availableProduct rooms",
+                                screenWidth: width / 1.3),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    PlaceLocation(
-                        icondata: Icons.event_available,
-                        screenWidth: width,
-                        loctaion: "$availableProduct  Available"),
-                    SizedBox(
-                      width: width * 0.06,
-                    ),
-                  ],
-                )
-              ],
+                  // Container(
+                  //   width: width * 0.5,
+                  //   child: Text(
+                  //     description,
+                  //     overflow: TextOverflow.ellipsis,
+                  //     maxLines: 2,
+                  //     style: TextStyle(
+                  //       fontSize: width * 0.026,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: theme.colorScheme.onPrimary.withOpacity(0.9),
+                  //     ),
+                  //   ),
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // PlaceLocation(
+                      //     icondata: Icons.event_available,
+                      //     screenWidth: width,
+                      //     loctaion: "$availableProduct  Available"),
+                      SizedBox(
+                        width: width * 0.06,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
