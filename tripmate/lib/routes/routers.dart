@@ -7,13 +7,13 @@ import 'package:tripmate/screens/changePasswordScreen/changepasswordscreen.dart'
 import 'package:tripmate/screens/agent_detail_screen/agent_deatil_screen.dart';
 import 'package:tripmate/screens/agent_detail_screen/bindings/agent_binding.dart';
 import 'package:tripmate/screens/Tourpackage/controller/tour_package_controller.dart';
-<<<<<<< HEAD
+
 import 'package:tripmate/screens/confirm_email/bindings/confirm_email_bindings.dart';
 import 'package:tripmate/screens/confirm_email/confirm_email_screen.dart';
-=======
+
 import 'package:tripmate/screens/forgetPasswordScreen/Binding/forgetBinfing.dart';
 import 'package:tripmate/screens/forgetPasswordScreen/forgetpasswordscreen.dart';
->>>>>>> 64175fc078d0c379e9cb886811c3ef6a55cc28cd
+
 import 'package:tripmate/screens/hotel/Binding/hotel_binding.dart';
 import 'package:tripmate/screens/hotel/hotel_detail_screen.dart';
 import 'package:tripmate/screens/hotel/room_detail_screen.dart';
@@ -100,11 +100,10 @@ class AppRoutes {
   static const String agentDetailScreen = '/agent_detial_contrller';
   static const String forgetPasswordScreen = '/forgetPassword';
   static const String paymentwebView = '/paymentWebView';
-<<<<<<< HEAD
+
   static const String confirmEmailScreen = '/ConfirmEmail';
-=======
+
   static const String changePassword = '/changepassword';
->>>>>>> 64175fc078d0c379e9cb886811c3ef6a55cc28cd
 
   static List<GetPage> pages = [
     GetPage(
